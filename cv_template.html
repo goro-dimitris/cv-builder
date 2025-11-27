@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{ personal_info.name }}</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: #000;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.5in;
+            background: #fff;
+        }
+        
+        h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            color: #000;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 3px;
+        }
+        
+        .header {
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            font-size: 10pt;
+            margin-top: 5px;
+        }
+        
+        .contact-info span {
+            margin-right: 15px;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+        }
+        
+        .experience-item, .education-item {
+            margin-bottom: 15px;
+        }
+        
+        .job-title {
+            font-weight: bold;
+            font-size: 12pt;
+        }
+        
+        .company-name {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+        
+        .date-range {
+            font-style: italic;
+            font-size: 10pt;
+            margin-bottom: 5px;
+        }
+        
+        .description {
+            margin-top: 5px;
+            margin-left: 0;
+        }
+        
+        .description ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        
+        .description li {
+            margin-bottom: 3px;
+        }
+        
+        .skills-list {
+            margin: 5px 0;
+        }
+        
+        .skills-list span {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .summary {
+            text-align: justify;
+            margin: 10px 0;
+        }
+        
+        @media print {
+            body {
+                padding: 0.3in;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ personal_info.name }}</h1>
+        <div class="contact-info">
+            {% if personal_info.email %}<span>{{ personal_info.email }}</span>{% endif %}
+            {% if personal_info.phone %}<span>{{ personal_info.phone }}</span>{% endif %}
+            {% if personal_info.location %}<span>{{ personal_info.location }}</span>{% endif %}
+            {% if personal_info.linkedin %}<span>{{ personal_info.linkedin }}</span>{% endif %}
+        </div>
+    </div>
+    
+    {% if summary %}
+    <div class="section">
+        <h2>Professional Summary</h2>
+        <div class="summary">{{ summary }}</div>
+    </div>
+    {% endif %}
+    
+    {% if experience %}
+    <div class="section">
+        <h2>Work Experience</h2>
+        {% for job in experience %}
+        <div class="experience-item">
+            <div class="job-title">{{ job.title }}</div>
+            <div class="company-name">{{ job.company }}</div>
+            {% if job.start_date or job.end_date %}
+            <div class="date-range">
+                {% if job.start_date %}{{ job.start_date }}{% endif %}
+                {% if job.start_date and job.end_date %} - {% endif %}
+                {% if job.end_date %}{{ job.end_date }}{% endif %}
+            </div>
+            {% endif %}
+            {% if job.description %}
+            <div class="description">
+                <ul>
+                    {% for item in job.description %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    {% if education %}
+    <div class="section">
+        <h2>Education</h2>
+        {% for edu in education %}
+        <div class="education-item">
+            <div class="job-title">
+                {% if edu.degree %}{{ edu.degree }}{% endif %}
+                {% if edu.field and edu.degree %} in {{ edu.field }}{% elif edu.field %}{{ edu.field }}{% endif %}
+            </div>
+            <div class="company-name">{{ edu.institution }}</div>
+            {% if edu.dates %}
+            <div class="date-range">{{ edu.dates }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    {% if skills %}
+    <div class="section">
+        <h2>Skills</h2>
+        <div class="skills-list">
+            {% for skill in skills %}
+            <span>{{ skill }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if certifications %}
+    <div class="section">
+        <h2>Certifications</h2>
+        {% for cert in certifications %}
+        <div class="experience-item">
+            <div class="job-title">{{ cert.name }}</div>
+            {% if cert.issuer %}<div class="company-name">{{ cert.issuer }}</div>{% endif %}
+            {% if cert.date %}<div class="date-range">{{ cert.date }}</div>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    {% if languages %}
+    <div class="section">
+        <h2>Languages</h2>
+        <div class="skills-list">
+            {% for lang in languages %}
+            <span>{{ lang }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if projects %}
+    <div class="section">
+        <h2>Projects</h2>
+        {% for project in projects %}
+        <div class="experience-item">
+            {% if project.name %}<div class="job-title">{{ project.name }}</div>{% endif %}
+            {% if project.description %}
+            <div class="description">{{ project.description }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>
+

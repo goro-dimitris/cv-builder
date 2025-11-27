@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimitrios Gkorovelis - Senior UX Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --bg: #ffffff;
+            --bg-subtle: #f8f9fa;
+            --border: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .page {
+            padding: 40px 50px;
+            min-height: 297mm;
+            position: relative;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid var(--primary);
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 120px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .name {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 32pt;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            line-height: 1.1;
+        }
+
+        .title {
+            font-size: 14pt;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .tagline {
+            font-size: 10pt;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 9pt;
+            line-height: 1.8;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            color: var(--text);
+        }
+
+        .contact-icon {
+            width: 14px;
+            height: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .contact-item a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 40px;
+        }
+
+        .left-column {
+            flex: 1;
+        }
+
+        .right-column {
+            padding-left: 20px;
+            border-left: 2px solid var(--bg-subtle);
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 12pt;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        /* Summary */
+        .summary {
+            font-size: 10.5pt;
+            line-height: 1.7;
+            color: var(--text);
+            text-align: justify;
+        }
+
+        .summary strong {
+            color: var(--primary);
+        }
+
+        /* Experience Items */
+        .experience-item {
+            margin-bottom: 22px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .job-title {
+            font-weight: 600;
+            font-size: 11pt;
+            color: var(--primary);
+        }
+
+        .date-range {
+            font-size: 9pt;
+            color: var(--text-light);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .company-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .company-name {
+            font-weight: 500;
+            color: var(--accent);
+            font-size: 10pt;
+        }
+
+        .location {
+            font-size: 9pt;
+            color: var(--text-light);
+        }
+
+        .location::before {
+            content: '·';
+            margin-right: 8px;
+        }
+
+        .experience-description {
+            font-size: 9.5pt;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .experience-description ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .experience-description li {
+            margin-bottom: 3px;
+        }
+
+        /* Skills Section */
+        .skills-category {
+            margin-bottom: 16px;
+        }
+
+        .skills-category-title {
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            background: var(--bg-subtle);
+            color: var(--text);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+            font-weight: 500;
+            border: 1px solid var(--border);
+        }
+
+        .skill-tag.highlight {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Right Column Sections */
+        .right-section {
+            margin-bottom: 24px;
+        }
+
+        .right-section .section-title {
+            font-size: 10pt;
+            letter-spacing: 1.5px;
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 14px;
+        }
+
+        .education-degree {
+            font-weight: 600;
+            font-size: 9.5pt;
+            color: var(--primary);
+        }
+
+        .education-school {
+            font-size: 9pt;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .education-date {
+            font-size: 8.5pt;
+            color: var(--text-light);
+        }
+
+        /* Languages */
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 9pt;
+        }
+
+        .language-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .language-level {
+            font-size: 8pt;
+            color: var(--text-light);
+            background: var(--bg-subtle);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* Certifications */
+        .cert-item {
+            margin-bottom: 10px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 9pt;
+        }
+
+        .cert-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 8pt;
+        }
+
+        .cert-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .cert-issuer {
+            font-size: 8pt;
+            color: var(--text-light);
+        }
+
+        /* Portfolio Link */
+        .portfolio-link {
+            background: linear-gradient(135deg, var(--primary), #2d2d5a);
+            color: white;
+            padding: 14px 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .portfolio-link .label {
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .portfolio-link .url {
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .portfolio-link a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .page {
+                padding: 35px 45px;
+            }
+
+            .skill-tag.highlight {
+                background: var(--primary) !important;
+                color: white !important;
+            }
+
+            .portfolio-link {
+                background: var(--primary) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="name">Dimitrios Gkorovelis</h1>
+                <div class="title">Senior UX Designer</div>
+                <div class="tagline">Transforming ideas into delightful digital experiences</div>
+            </div>
+            <div class="header-right">
+                <div class="contact-item">
+                    <span class="contact-icon">@</span>
+                    <a href="mailto:gorodimitris@gmail.com">gorodimitris@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">☎</span>
+                    <span>+45 52 73 68 55</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">in</span>
+                    <a href="https://linkedin.com/in/gorodimitris">linkedin.com/in/gorodimitris</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🌐</span>
+                    <a href="https://gorodimitris.gr">gorodimitris.gr</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <span>Copenhagen, Denmark</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Summary -->
+                <section class="section">
+                    <h2 class="section-title">Professional Summary</h2>
+                    <p class="summary">
+                        <strong>8+ years of experience</strong> transforming the tech and marketing world through creativity and design. As a Senior UX Designer where creativity meets AI, I specialize in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems. My mission is to make technology not just usable, but <strong>enjoyable for everyone</strong>. From Figma to Figjam, I leverage the latest tools to turn ideas into delightful digital experiences that users love.
+                    </p>
+                </section>
+
+                <!-- Experience -->
+                <section class="section">
+                    <h2 class="section-title">Work Experience</h2>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <span class="job-title">Senior UX Designer</span>
+                            <span class="date-range">Feb 2024 — Present</span>
+                        </div>
+                        <div class="company-line">
+                            <span class="company-name">GUT Copenhagen (via Globant)</span>
+                            <span class="location">Copenhagen, Denmark</span>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Lead UX design initiatives at the intersection of creativity and AI technology</li>
+                                <li>Conduct comprehensive UX audits and user testing sessions to optimize digital products</li>
+                                <li>Design and maintain scalable design systems ensuring brand consistency</li>
+                                <li>Collaborate with cross-functional teams to deliver user-centered solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <span class="job-title">Freelance Product Designer</span>
+                            <span class="date-range">Oct 2016 — Present</span>
+                        </div>
+                        <div class="company-line">
+                            <span class="company-name">Self-Employed</span>
+                            <span class="location">Athens, Greece & Remote</span>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>End-to-end product design following principles of accessibility and inclusivity</li>
+                                <li>Create wireframes, high-fidelity prototypes, and animated interactions</li>
+                                <li>Lead user testing sessions and translate insights into actionable designs</li>
+                                <li>Deliver mobile app and web projects with consistent branding</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <span class="job-title">Product Designer</span>
+                            <span class="date-range">Jan 2023 — Feb 2024</span>
+                        </div>
+                        <div class="company-line">
+                            <span class="company-name">Atos</span>
+                            <span class="location">Copenhagen, Denmark</span>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Designed B2B traceability software focusing on complex enterprise workflows</li>
+                                <li>Created intuitive interfaces for data-heavy IT applications</li>
+                                <li>Collaborated with product and engineering teams in agile environment</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <span class="job-title">Visual & Interaction Designer</span>
+                            <span class="date-range">Jul 2021 — Jan 2023</span>
+                        </div>
+                        <div class="company-line">
+                            <span class="company-name">WhiteSpace</span>
+                            <span class="location">Athens, Greece</span>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Designed user flows and interactive prototypes in agile environment</li>
+                                <li>Led feature brainstorming sessions with design thinking methodologies</li>
+                                <li>Ensured accessibility, responsiveness, and inclusiveness in all designs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <span class="job-title">Graphic Web Designer</span>
+                            <span class="date-range">Jan 2019 — Jul 2021</span>
+                        </div>
+                        <div class="company-line">
+                            <span class="company-name">ForestView</span>
+                            <span class="location">Athens, Greece</span>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Created UI/UX designs, wireframes, and interactive prototypes</li>
+                                <li>Managed product design lifecycle from concept to implementation</li>
+                                <li>Developed product strategy and conducted user testing sessions</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <span class="job-title">Digital Designer</span>
+                            <span class="date-range">Mar 2017 — Dec 2018</span>
+                        </div>
+                        <div class="company-line">
+                            <span class="company-name">Digital Peak Online Solutions</span>
+                            <span class="location">Athens, Greece</span>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Delivered UI/UX design, web design, branding, and digital animations</li>
+                                <li>Created cohesive visual identities across digital platforms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Skills -->
+                <section class="right-section">
+                    <h2 class="section-title">Skills</h2>
+                    
+                    <div class="skills-category">
+                        <div class="skills-category-title">Design</div>
+                        <div class="skills-list">
+                            <span class="skill-tag highlight">UX Design</span>
+                            <span class="skill-tag highlight">UI Design</span>
+                            <span class="skill-tag">Design Systems</span>
+                            <span class="skill-tag">User Research</span>
+                            <span class="skill-tag">Wireframing</span>
+                            <span class="skill-tag">Prototyping</span>
+                            <span class="skill-tag">Visual Design</span>
+                            <span class="skill-tag">Branding</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <div class="skills-category-title">Tools</div>
+                        <div class="skills-list">
+                            <span class="skill-tag highlight">Figma</span>
+                            <span class="skill-tag">FigJam</span>
+                            <span class="skill-tag">Adobe XD</span>
+                            <span class="skill-tag">Sketch</span>
+                            <span class="skill-tag">ProtoPie</span>
+                            <span class="skill-tag">Illustrator</span>
+                            <span class="skill-tag">Photoshop</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <div class="skills-category-title">Technical</div>
+                        <div class="skills-list">
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">Responsive Design</span>
+                            <span class="skill-tag">Accessibility</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Education -->
+                <section class="right-section">
+                    <h2 class="section-title">Education</h2>
+                    <div class="education-item">
+                        <div class="education-degree">Graphic Design</div>
+                        <div class="education-school">TEI of Athens</div>
+                        <div class="education-date">2009 — 2017</div>
+                    </div>
+                </section>
+
+                <!-- Languages -->
+                <section class="right-section">
+                    <h2 class="section-title">Languages</h2>
+                    <div class="language-item">
+                        <span class="language-name">Greek</span>
+                        <span class="language-level">Native</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">English</span>
+                        <span class="language-level">Fluent</span>
+                    </div>
+                </section>
+
+                <!-- Certifications -->
+                <section class="right-section">
+                    <h2 class="section-title">Certifications</h2>
+                    <div class="cert-item">
+                        <div class="cert-name">Emotional Design</div>
+                        <div class="cert-issuer">Make Products People Love</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name">UX Fundamentals</div>
+                        <div class="cert-issuer">Web Design</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name">User Research Methods</div>
+                        <div class="cert-issuer">Best Practices</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name">Workshop Certificate</div>
+                        <div class="cert-issuer">GUT Copenhagen</div>
+                    </div>
+                </section>
+
+                <!-- Portfolio -->
+                <div class="portfolio-link">
+                    <div class="label">View My Work</div>
+                    <div class="url"><a href="https://gorodimitris.gr">gorodimitris.gr</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

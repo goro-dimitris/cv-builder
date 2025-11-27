@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Studio — Design Your Perfect Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS VARIABLES
+           ============================================ */
+        :root {
+            /* App UI - Warm Cream Theme */
+            --ui-bg: #f5f0e8;
+            --ui-surface: #ffffff;
+            --ui-surface-hover: #faf8f5;
+            --ui-border: #e8e0d5;
+            --ui-text: #1a1a1a;
+            --ui-text-muted: #6b6560;
+            --ui-accent: #c45c3e;
+            --ui-accent-hover: #a84d33;
+            --ui-shadow: rgba(0, 0, 0, 0.06);
+            
+            /* CV Defaults */
+            --cv-primary: #1a1a2e;
+            --cv-accent: #e94560;
+            --cv-text: #2d3436;
+            --cv-text-light: #636e72;
+            --cv-bg: #ffffff;
+            --cv-bg-subtle: #f8f9fa;
+            --cv-border: #e9ecef;
+            --cv-font-heading: 'Playfair Display', serif;
+            --cv-font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--ui-bg);
+            color: var(--ui-text);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           APP LAYOUT
+           ============================================ */
+        .app {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            height: 100vh;
+        }
+
+        /* ============================================
+           CONTROL PANEL
+           ============================================ */
+        .panel {
+            background: var(--ui-surface);
+            border-right: 1px solid var(--ui-border);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .panel-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--ui-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--ui-accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--ui-accent);
+        }
+
+        /* Randomize Button */
+        .randomize-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, var(--ui-accent), #e07a5f);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .randomize-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(196, 92, 62, 0.3);
+        }
+
+        .randomize-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--ui-border);
+            padding: 0 20px;
+        }
+
+        .tab {
+            padding: 16px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ui-text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab:hover {
+            color: var(--ui-text);
+        }
+
+        .tab.active {
+            color: var(--ui-accent);
+            border-bottom-color: var(--ui-accent);
+        }
+
+        .tab svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Section Styling */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--ui-text-muted);
+        }
+
+        .section-count {
+            font-size: 11px;
+            color: var(--ui-text-muted);
+            background: var(--ui-bg);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Layout Grid */
+        .layouts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .layout-card {
+            aspect-ratio: 0.72;
+            background: var(--ui-bg);
+            border: 2px solid var(--ui-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layout-card:hover {
+            border-color: var(--ui-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--ui-shadow);
+        }
+
+        .layout-card.active {
+            border-color: var(--ui-accent);
+            box-shadow: 0 0 0 3px rgba(196, 92, 62, 0.15);
+        }
+
+        .layout-card.active::after {
+            content: '✓';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background: var(--ui-accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .layout-preview {
+            width: 100%;
+            height: 100%;
+            padding: 4px;
+        }
+
+        .layout-mini {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Theme Grid */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .theme-card {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .theme-card:hover {
+            transform: scale(1.08);
+            z-index: 1;
+        }
+
+        .theme-card.active {
+            border-color: var(--ui-text);
+            box-shadow: 0 0 0 2px var(--ui-accent);
+        }
+
+        .theme-card .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ui-text);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .theme-card:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* Content Editor */
+        .editor-section {
+            margin-bottom: 24px;
+        }
+
+        .editor-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--ui-text);
+        }
+
+        .editor-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--ui-border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            background: var(--ui-bg);
+            transition: all 0.2s;
+        }
+
+        .editor-input:focus {
+            outline: none;
+            border-color: var(--ui-accent);
+            background: white;
+        }
+
+        .editor-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .experience-card {
+            background: var(--ui-bg);
+            border: 1px solid var(--ui-border);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .experience-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .experience-card-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .experience-card-meta {
+            font-size: 12px;
+            color: var(--ui-text-muted);
+        }
+
+        .editor-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Download Section */
+        .download-section {
+            padding: 20px 24px;
+            border-top: 1px solid var(--ui-border);
+            background: var(--ui-surface);
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--ui-text);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            background: #333;
+            transform: translateY(-1px);
+        }
+
+        .download-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ============================================
+           PREVIEW AREA
+           ============================================ */
+        .preview {
+            background: linear-gradient(145deg, #e8e0d5 0%, #d5cdc2 100%);
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .cv-wrapper {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 25px 100px rgba(0, 0, 0, 0.15);
+            border-radius: 2px;
+        }
+
+        /* ============================================
+           CV BASE STYLES
+           ============================================ */
+        .cv {
+            width: 100%;
+            min-height: 297mm;
+            padding: 40px 45px;
+            font-family: var(--cv-font-body);
+            font-size: 10pt;
+            line-height: 1.55;
+            color: var(--cv-text);
+            background: var(--cv-bg);
+        }
+
+        .cv-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--cv-primary);
+        }
+
+        .cv-name {
+            font-family: var(--cv-font-heading);
+            font-size: 28pt;
+            font-weight: 600;
+            color: var(--cv-primary);
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .cv-title {
+            font-size: 13pt;
+            font-weight: 500;
+            color: var(--cv-accent);
+            margin-bottom: 4px;
+        }
+
+        .cv-tagline {
+            font-size: 10pt;
+            color: var(--cv-text-light);
+            font-style: italic;
+        }
+
+        .cv-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 9pt;
+        }
+
+        .cv-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--cv-text);
+        }
+
+        .cv-contact-icon {
+            width: 14px;
+            height: 14px;
+            background: var(--cv-primary);
+            color: white;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+        }
+
+        .cv-main {
+            display: grid;
+            grid-template-columns: 1fr 180px;
+            gap: 35px;
+        }
+
+        .cv-section {
+            margin-bottom: 24px;
+        }
+
+        .cv-section-title {
+            font-family: var(--cv-font-heading);
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--cv-primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--cv-accent);
+            display: inline-block;
+        }
+
+        .cv-summary {
+            font-size: 10pt;
+            line-height: 1.65;
+            text-align: justify;
+        }
+
+        .cv-exp {
+            margin-bottom: 18px;
+            padding-left: 14px;
+            border-left: 3px solid var(--cv-accent);
+        }
+
+        .cv-exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .cv-exp-title {
+            font-weight: 600;
+            font-size: 11pt;
+            color: var(--cv-primary);
+        }
+
+        .cv-exp-date {
+            font-size: 9pt;
+            color: var(--cv-text-light);
+        }
+
+        .cv-exp-company {
+            font-weight: 500;
+            color: var(--cv-accent);
+            font-size: 10pt;
+            margin-bottom: 6px;
+        }
+
+        .cv-exp-location {
+            color: var(--cv-text-light);
+            font-size: 9pt;
+        }
+
+        .cv-exp-desc {
+            font-size: 9.5pt;
+        }
+
+        .cv-exp-desc ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .cv-exp-desc li {
+            margin-bottom: 2px;
+        }
+
+        .cv-sidebar {
+            padding-left: 20px;
+            border-left: 1px solid var(--cv-border);
+        }
+
+        .cv-skills {
+            margin-bottom: 14px;
+        }
+
+        .cv-skills-title {
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--cv-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cv-skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .cv-skill {
+            background: var(--cv-bg-subtle);
+            color: var(--cv-text);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 8pt;
+            border: 1px solid var(--cv-border);
+        }
+
+        .cv-skill.primary {
+            background: var(--cv-primary);
+            color: white;
+            border-color: var(--cv-primary);
+        }
+
+        .cv-edu {
+            margin-bottom: 12px;
+        }
+
+        .cv-edu-degree {
+            font-weight: 600;
+            font-size: 9.5pt;
+            color: var(--cv-primary);
+        }
+
+        .cv-edu-school {
+            font-size: 9pt;
+            color: var(--cv-text);
+        }
+
+        .cv-edu-date {
+            font-size: 8.5pt;
+            color: var(--cv-text-light);
+        }
+
+        .cv-lang {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 9pt;
+        }
+
+        .cv-lang-level {
+            font-size: 8pt;
+            color: var(--cv-text-light);
+            background: var(--cv-bg-subtle);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .cv-cert {
+            margin-bottom: 8px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 9pt;
+        }
+
+        .cv-cert::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--cv-accent);
+            font-size: 8pt;
+        }
+
+        .cv-portfolio {
+            background: var(--cv-primary);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .cv-portfolio-label {
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .cv-portfolio-url {
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        /* ============================================
+           40 LAYOUT VARIATIONS
+           ============================================ */
+        
+        /* 1-10: Column Variations */
+        .layout-1 .cv-main { grid-template-columns: 1fr 180px; }
+        .layout-2 .cv-main { display: block; }
+        .layout-2 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 24px; border: none; padding: 20px 0 0 0; margin-top: 20px; border-top: 1px solid var(--cv-border); }
+        .layout-2 .cv-sidebar > * { flex: 1; min-width: 140px; }
+        .layout-3 .cv-main { grid-template-columns: 200px 1fr; }
+        .layout-3 .cv-sidebar { order: -1; border-left: none; border-right: 1px solid var(--cv-border); padding-left: 0; padding-right: 20px; }
+        .layout-4 .cv-main { grid-template-columns: 1fr 220px; }
+        .layout-5 .cv-main { grid-template-columns: 160px 1fr 160px; }
+        .layout-5 .cv-sidebar { border: none; padding: 0; }
+        
+        /* 6-10: Header Variations */
+        .layout-6 .cv-header { text-align: center; }
+        .layout-6 .cv-contact { justify-content: center; }
+        .layout-7 .cv-header { background: var(--cv-primary); color: white; margin: -40px -45px 30px; padding: 35px 45px; border: none; }
+        .layout-7 .cv-header .cv-name { color: white; }
+        .layout-7 .cv-header .cv-title { color: var(--cv-accent); }
+        .layout-7 .cv-header .cv-tagline, .layout-7 .cv-header .cv-contact-item { color: rgba(255,255,255,0.85); }
+        .layout-8 .cv-header { background: linear-gradient(135deg, var(--cv-primary), var(--cv-accent)); color: white; margin: -40px -45px 30px; padding: 40px 45px; border: none; }
+        .layout-8 .cv-header .cv-name, .layout-8 .cv-header .cv-title { color: white; }
+        .layout-8 .cv-header .cv-tagline, .layout-8 .cv-header .cv-contact-item { color: rgba(255,255,255,0.9); }
+        .layout-9 .cv-header { display: flex; justify-content: space-between; align-items: flex-end; }
+        .layout-9 .cv-contact { flex-direction: column; align-items: flex-end; margin-top: 0; }
+        .layout-10 .cv-header { border: none; padding-bottom: 0; }
+        .layout-10 .cv-name { font-size: 42pt; }
+        
+        /* 11-15: Experience Card Styles */
+        .layout-11 .cv-exp { background: var(--cv-bg-subtle); padding: 14px; border-radius: 8px; border-left: none; margin-bottom: 12px; }
+        .layout-12 .cv-exp { border-left: none; padding-left: 20px; position: relative; }
+        .layout-12 .cv-exp::before { content: ''; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; background: var(--cv-accent); border-radius: 50%; }
+        .layout-13 .cv-exp { border-left-width: 4px; }
+        .layout-14 .cv-exp { border: 1px solid var(--cv-border); padding: 14px; border-radius: 6px; border-left: 4px solid var(--cv-accent); }
+        .layout-15 .cv-section-title { background: var(--cv-primary); color: white; padding: 6px 14px; display: inline-block; border: none; margin-left: -45px; padding-left: 45px; }
+        
+        /* 16-20: Typography Variations */
+        .layout-16 { --cv-font-heading: 'Crimson Pro', serif; --cv-font-body: 'Crimson Pro', serif; }
+        .layout-17 { --cv-font-heading: 'Space Grotesk', sans-serif; --cv-font-body: 'Space Grotesk', sans-serif; }
+        .layout-18 { --cv-font-heading: 'JetBrains Mono', monospace; --cv-font-body: 'JetBrains Mono', monospace; }
+        .layout-18 .cv { font-size: 9pt; }
+        .layout-19 { --cv-font-heading: 'Libre Baskerville', serif; --cv-font-body: 'Inter', sans-serif; }
+        .layout-20 { --cv-font-heading: 'Outfit', sans-serif; --cv-font-body: 'Outfit', sans-serif; }
+        
+        /* 21-25: Minimal Variations */
+        .layout-21 .cv-header { border: none; }
+        .layout-21 .cv-section-title { border: none; letter-spacing: 3px; font-size: 10pt; }
+        .layout-22 .cv-header { border-bottom-width: 4px; }
+        .layout-22 .cv-section-title { border-bottom-width: 3px; }
+        .layout-23 .cv-exp { border: none; padding-left: 0; }
+        .layout-23 .cv-section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--cv-accent); margin-top: 6px; }
+        .layout-23 .cv-section-title { border: none; display: block; }
+        .layout-24 .cv { border: 2px solid var(--cv-primary); padding: 35px 40px; }
+        .layout-25 .cv { border: 4px double var(--cv-primary); padding: 35px 40px; }
+        .layout-25 .cv-header { text-align: center; }
+        .layout-25 .cv-contact { justify-content: center; }
+        
+        /* 26-30: Creative Variations */
+        .layout-26 .cv-sidebar { background: var(--cv-bg-subtle); margin: -40px -45px -40px 0; padding: 40px 30px 40px 25px; border: none; }
+        .layout-27 .cv-sidebar { background: var(--cv-primary); color: white; margin: -40px -45px -40px 0; padding: 40px 30px 40px 25px; border: none; }
+        .layout-27 .cv-sidebar .cv-section-title, .layout-27 .cv-sidebar .cv-skills-title { color: white; }
+        .layout-27 .cv-sidebar .cv-skill { background: rgba(255,255,255,0.15); border-color: transparent; color: white; }
+        .layout-27 .cv-sidebar .cv-skill.primary { background: var(--cv-accent); }
+        .layout-27 .cv-sidebar .cv-lang-level { background: rgba(255,255,255,0.2); color: white; }
+        .layout-28 .cv-main { grid-template-columns: 220px 1fr; }
+        .layout-28 .cv-sidebar { order: -1; background: var(--cv-primary); color: white; margin: -40px 0 -40px -45px; padding: 40px 25px 40px 45px; border: none; }
+        .layout-28 .cv-sidebar .cv-section-title, .layout-28 .cv-sidebar .cv-skills-title { color: white; border-color: var(--cv-accent); }
+        .layout-28 .cv-sidebar .cv-skill { background: rgba(255,255,255,0.15); border-color: transparent; color: white; }
+        .layout-28 .cv-sidebar .cv-lang-level { background: rgba(255,255,255,0.2); color: white; }
+        .layout-29 .cv-header { display: grid; grid-template-columns: auto 1fr; gap: 25px; align-items: center; }
+        .layout-29 .cv-avatar { display: flex !important; }
+        .layout-30 .cv-section-title { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); margin-right: 15px; margin-bottom: 0; float: left; height: 100%; border: none; border-left: 2px solid var(--cv-accent); padding-left: 8px; }
+        
+        /* 31-35: Grid Variations */
+        .layout-31 .cv-main { display: block; }
+        .layout-31 .cv-exps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .layout-31 .cv-exp { background: var(--cv-bg-subtle); padding: 12px; border-radius: 6px; border-left: none; margin: 0; }
+        .layout-31 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 24px; border: none; padding: 20px 0 0 0; margin-top: 20px; border-top: 1px solid var(--cv-border); }
+        .layout-31 .cv-sidebar > * { flex: 1; min-width: 140px; }
+        .layout-32 .cv { background: var(--cv-bg-subtle); }
+        .layout-32 .cv-header, .layout-32 .cv-section { background: white; padding: 20px; border-radius: 8px; margin-bottom: 16px; }
+        .layout-32 .cv-header { border: none; }
+        .layout-33 .cv-exp { display: grid; grid-template-columns: 100px 1fr; gap: 15px; border: none; padding: 0; margin-bottom: 20px; }
+        .layout-33 .cv-exp-date { grid-column: 1; font-weight: 500; color: var(--cv-accent); }
+        .layout-34 .cv-main { gap: 50px; }
+        .layout-34 .cv-sidebar { border-left-width: 3px; border-color: var(--cv-accent); }
+        .layout-35 .cv-header { margin-bottom: 40px; padding-bottom: 30px; }
+        .layout-35 .cv-name { font-size: 36pt; letter-spacing: -1px; }
+        
+        /* 36-40: Unique Styles */
+        .layout-36 .cv { background: var(--cv-primary); color: white; }
+        .layout-36 .cv-name, .layout-36 .cv-section-title, .layout-36 .cv-exp-title, .layout-36 .cv-skills-title, .layout-36 .cv-edu-degree { color: white; }
+        .layout-36 .cv-title { color: var(--cv-accent); }
+        .layout-36 .cv-tagline, .layout-36 .cv-text-light, .layout-36 .cv-exp-date, .layout-36 .cv-exp-location, .layout-36 .cv-edu-date { color: rgba(255,255,255,0.7); }
+        .layout-36 .cv-header { border-color: var(--cv-accent); }
+        .layout-36 .cv-section-title { border-color: var(--cv-accent); }
+        .layout-36 .cv-skill { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white; }
+        .layout-36 .cv-sidebar { border-color: rgba(255,255,255,0.2); }
+        .layout-36 .cv-portfolio { background: var(--cv-accent); }
+        .layout-37 .cv-section-title { font-size: 14pt; letter-spacing: 0; text-transform: none; font-style: italic; }
+        .layout-38 .cv { padding: 50px 60px; }
+        .layout-38 .cv-header { margin-bottom: 40px; }
+        .layout-38 .cv-section { margin-bottom: 30px; }
+        .layout-39 .cv-exp { margin-left: 20px; }
+        .layout-39 .cv-exp::before { content: ''; position: absolute; left: -23px; top: 0; bottom: 0; width: 3px; background: var(--cv-accent); }
+        .layout-39 .cv-exp::after { content: ''; position: absolute; left: -27px; top: 6px; width: 11px; height: 11px; background: white; border: 3px solid var(--cv-accent); border-radius: 50%; }
+        .layout-40 .cv-header { background: var(--cv-accent); color: white; margin: -40px -45px 30px; padding: 35px 45px; border: none; }
+        .layout-40 .cv-header .cv-name { color: white; }
+        .layout-40 .cv-header .cv-title { color: var(--cv-primary); font-weight: 600; }
+        .layout-40 .cv-header .cv-tagline, .layout-40 .cv-header .cv-contact-item { color: rgba(255,255,255,0.9); }
+        
+        /* Avatar (hidden by default, shown in some layouts) */
+        .cv-avatar {
+            display: none;
+            width: 80px;
+            height: 80px;
+            background: var(--cv-primary);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28pt;
+            font-weight: 600;
+            font-family: var(--cv-font-heading);
+        }
+
+        /* Print */
+        @media print {
+            body { background: white; }
+            .panel { display: none; }
+            .app { display: block; }
+            .preview { padding: 0; background: white; }
+            .cv-wrapper { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Control Panel -->
+        <aside class="panel">
+            <div class="panel-header">
+                <div class="logo">
+                    <div class="logo-icon">CV</div>
+                    <div class="logo-text">CV <span>Studio</span></div>
+                </div>
+                <button class="randomize-btn" onclick="randomize()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    Randomize
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="layouts">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                    Layouts
+                </div>
+                <div class="tab" data-tab="themes">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                    Themes
+                </div>
+                <div class="tab" data-tab="content">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Content
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Layouts Pane -->
+                <div class="tab-pane active" id="layouts-pane">
+                    <div class="section-header">
+                        <span class="section-title">Choose Layout</span>
+                        <span class="section-count">40 styles</span>
+                    </div>
+                    <div class="layouts-grid" id="layoutsGrid"></div>
+                </div>
+
+                <!-- Themes Pane -->
+                <div class="tab-pane" id="themes-pane">
+                    <div class="section-header">
+                        <span class="section-title">Color Themes</span>
+                        <span class="section-count">50 palettes</span>
+                    </div>
+                    <div class="themes-grid" id="themesGrid"></div>
+                </div>
+
+                <!-- Content Pane -->
+                <div class="tab-pane" id="content-pane">
+                    <div class="section-header">
+                        <span class="section-title">Personal Info</span>
+                    </div>
+                    <div class="editor-section">
+                        <label class="editor-label">Full Name</label>
+                        <input type="text" class="editor-input" id="edit-name" value="Dimitrios Gkorovelis" oninput="updateContent()">
+                    </div>
+                    <div class="editor-section">
+                        <label class="editor-label">Job Title</label>
+                        <input type="text" class="editor-input" id="edit-title" value="Senior UX Designer" oninput="updateContent()">
+                    </div>
+                    <div class="editor-section">
+                        <label class="editor-label">Tagline</label>
+                        <input type="text" class="editor-input" id="edit-tagline" value="Transforming ideas into delightful digital experiences" oninput="updateContent()">
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-section">
+                            <label class="editor-label">Email</label>
+                            <input type="email" class="editor-input" id="edit-email" value="gorodimitris@gmail.com" oninput="updateContent()">
+                        </div>
+                        <div class="editor-section">
+                            <label class="editor-label">Phone</label>
+                            <input type="tel" class="editor-input" id="edit-phone" value="+45 52 73 68 55" oninput="updateContent()">
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-section">
+                            <label class="editor-label">Location</label>
+                            <input type="text" class="editor-input" id="edit-location" value="Copenhagen, Denmark" oninput="updateContent()">
+                        </div>
+                        <div class="editor-section">
+                            <label class="editor-label">Portfolio</label>
+                            <input type="url" class="editor-input" id="edit-portfolio" value="gorodimitris.gr" oninput="updateContent()">
+                        </div>
+                    </div>
+                    <div class="editor-section">
+                        <label class="editor-label">LinkedIn</label>
+                        <input type="text" class="editor-input" id="edit-linkedin" value="linkedin.com/in/gorodimitris" oninput="updateContent()">
+                    </div>
+
+                    <div class="section-header" style="margin-top: 24px;">
+                        <span class="section-title">Summary</span>
+                    </div>
+                    <div class="editor-section">
+                        <textarea class="editor-input editor-textarea" id="edit-summary" oninput="updateContent()">8+ years of experience transforming the tech and marketing world through creativity and design. As a Senior UX Designer where creativity meets AI, I specialize in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems.</textarea>
+                    </div>
+
+                    <div class="section-header" style="margin-top: 24px;">
+                        <span class="section-title">Skills (comma separated)</span>
+                    </div>
+                    <div class="editor-section">
+                        <label class="editor-label">Primary Skills</label>
+                        <input type="text" class="editor-input" id="edit-skills-primary" value="UX Design, UI Design, Figma" oninput="updateContent()">
+                    </div>
+                    <div class="editor-section">
+                        <label class="editor-label">All Skills</label>
+                        <textarea class="editor-input editor-textarea" id="edit-skills" oninput="updateContent()">Design Systems, User Research, Wireframing, Prototyping, Adobe XD, Sketch, ProtoPie, HTML, CSS, Accessibility</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download -->
+            <div class="download-section">
+                <button class="download-btn" onclick="window.print()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download PDF
+                </button>
+            </div>
+        </aside>
+
+        <!-- Preview -->
+        <main class="preview">
+            <div class="cv-wrapper" id="cvWrapper">
+                <div class="cv" id="cv">
+                    <header class="cv-header">
+                        <div class="cv-avatar">DG</div>
+                        <div>
+                            <h1 class="cv-name" id="cv-name">Dimitrios Gkorovelis</h1>
+                            <div class="cv-title" id="cv-title">Senior UX Designer</div>
+                            <div class="cv-tagline" id="cv-tagline">Transforming ideas into delightful digital experiences</div>
+                            <div class="cv-contact">
+                                <span class="cv-contact-item"><span class="cv-contact-icon">@</span><span id="cv-email">gorodimitris@gmail.com</span></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">☎</span><span id="cv-phone">+45 52 73 68 55</span></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">in</span><span id="cv-linkedin">linkedin.com/in/gorodimitris</span></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">🌐</span><span id="cv-portfolio-link">gorodimitris.gr</span></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">📍</span><span id="cv-location">Copenhagen, Denmark</span></span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="cv-main">
+                        <div class="cv-content">
+                            <section class="cv-section">
+                                <h2 class="cv-section-title">Professional Summary</h2>
+                                <p class="cv-summary" id="cv-summary">8+ years of experience transforming the tech and marketing world through creativity and design. As a Senior UX Designer where creativity meets AI, I specialize in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems.</p>
+                            </section>
+
+                            <section class="cv-section">
+                                <h2 class="cv-section-title">Work Experience</h2>
+                                <div class="cv-exps">
+                                    <div class="cv-exp">
+                                        <div class="cv-exp-header">
+                                            <span class="cv-exp-title">Senior UX Designer</span>
+                                            <span class="cv-exp-date">Feb 2024 — Present</span>
+                                        </div>
+                                        <div class="cv-exp-company">GUT Copenhagen (Globant) <span class="cv-exp-location">· Copenhagen</span></div>
+                                        <div class="cv-exp-desc">
+                                            <ul>
+                                                <li>Lead UX design at the intersection of creativity and AI</li>
+                                                <li>Conduct UX audits and user testing sessions</li>
+                                                <li>Design scalable design systems</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="cv-exp">
+                                        <div class="cv-exp-header">
+                                            <span class="cv-exp-title">Freelance Product Designer</span>
+                                            <span class="cv-exp-date">Oct 2016 — Present</span>
+                                        </div>
+                                        <div class="cv-exp-company">Self-Employed <span class="cv-exp-location">· Remote</span></div>
+                                        <div class="cv-exp-desc">
+                                            <ul>
+                                                <li>End-to-end product design with accessibility focus</li>
+                                                <li>Wireframes, prototypes, animated interactions</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="cv-exp">
+                                        <div class="cv-exp-header">
+                                            <span class="cv-exp-title">Product Designer</span>
+                                            <span class="cv-exp-date">Jan 2023 — Feb 2024</span>
+                                        </div>
+                                        <div class="cv-exp-company">Atos <span class="cv-exp-location">· Copenhagen</span></div>
+                                        <div class="cv-exp-desc">
+                                            <ul>
+                                                <li>B2B traceability software design</li>
+                                                <li>Enterprise workflow interfaces</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="cv-exp">
+                                        <div class="cv-exp-header">
+                                            <span class="cv-exp-title">Visual & Interaction Designer</span>
+                                            <span class="cv-exp-date">Jul 2021 — Jan 2023</span>
+                                        </div>
+                                        <div class="cv-exp-company">WhiteSpace <span class="cv-exp-location">· Athens</span></div>
+                                        <div class="cv-exp-desc">
+                                            <ul>
+                                                <li>User flows and interactive prototypes</li>
+                                                <li>Design thinking methodologies</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="cv-exp">
+                                        <div class="cv-exp-header">
+                                            <span class="cv-exp-title">Graphic Web Designer</span>
+                                            <span class="cv-exp-date">Jan 2019 — Jul 2021</span>
+                                        </div>
+                                        <div class="cv-exp-company">ForestView <span class="cv-exp-location">· Athens</span></div>
+                                        <div class="cv-exp-desc">
+                                            <ul>
+                                                <li>UI/UX designs and prototypes</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="cv-exp">
+                                        <div class="cv-exp-header">
+                                            <span class="cv-exp-title">Digital Designer</span>
+                                            <span class="cv-exp-date">Mar 2017 — Dec 2018</span>
+                                        </div>
+                                        <div class="cv-exp-company">Digital Peak <span class="cv-exp-location">· Athens</span></div>
+                                        <div class="cv-exp-desc">
+                                            <ul>
+                                                <li>UI/UX, branding, animations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <aside class="cv-sidebar">
+                            <section class="cv-section">
+                                <h2 class="cv-section-title">Skills</h2>
+                                <div class="cv-skills">
+                                    <div class="cv-skills-title">Core</div>
+                                    <div class="cv-skills-list" id="cv-skills-primary">
+                                        <span class="cv-skill primary">UX Design</span>
+                                        <span class="cv-skill primary">UI Design</span>
+                                        <span class="cv-skill primary">Figma</span>
+                                    </div>
+                                </div>
+                                <div class="cv-skills">
+                                    <div class="cv-skills-title">Tools & Tech</div>
+                                    <div class="cv-skills-list" id="cv-skills-all">
+                                        <span class="cv-skill">Design Systems</span>
+                                        <span class="cv-skill">User Research</span>
+                                        <span class="cv-skill">Wireframing</span>
+                                        <span class="cv-skill">Prototyping</span>
+                                        <span class="cv-skill">Adobe XD</span>
+                                        <span class="cv-skill">Sketch</span>
+                                        <span class="cv-skill">HTML</span>
+                                        <span class="cv-skill">CSS</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="cv-section">
+                                <h2 class="cv-section-title">Education</h2>
+                                <div class="cv-edu">
+                                    <div class="cv-edu-degree">Graphic Design</div>
+                                    <div class="cv-edu-school">TEI of Athens</div>
+                                    <div class="cv-edu-date">2009 — 2017</div>
+                                </div>
+                            </section>
+
+                            <section class="cv-section">
+                                <h2 class="cv-section-title">Languages</h2>
+                                <div class="cv-lang">
+                                    <span>Greek</span>
+                                    <span class="cv-lang-level">Native</span>
+                                </div>
+                                <div class="cv-lang">
+                                    <span>English</span>
+                                    <span class="cv-lang-level">Fluent</span>
+                                </div>
+                            </section>
+
+                            <section class="cv-section">
+                                <h2 class="cv-section-title">Certifications</h2>
+                                <div class="cv-cert">Emotional Design</div>
+                                <div class="cv-cert">UX Fundamentals</div>
+                                <div class="cv-cert">User Research</div>
+                            </section>
+
+                            <div class="cv-portfolio">
+                                <div class="cv-portfolio-label">Portfolio</div>
+                                <div class="cv-portfolio-url" id="cv-portfolio">gorodimitris.gr</div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA
+        // ============================================
+        const layouts = Array.from({length: 40}, (_, i) => ({
+            id: i + 1,
+            name: [
+                'Classic Right', 'Single Column', 'Left Sidebar', 'Wide Sidebar', 'Three Column',
+                'Centered Header', 'Dark Header', 'Gradient Header', 'Split Header', 'Magazine',
+                'Card Experience', 'Timeline Dots', 'Bold Border', 'Framed Cards', 'Banner Sections',
+                'Serif Elegant', 'Geometric', 'Monospace', 'Classic Serif', 'Modern Sans',
+                'Ultra Minimal', 'Heavy Rules', 'Accent Lines', 'Bordered', 'Executive',
+                'Right Panel', 'Dark Sidebar', 'Left Dark', 'Avatar Focus', 'Vertical Titles',
+                'Grid Cards', 'Floating Cards', 'Date Column', 'Wide Gap', 'Spacious',
+                'Dark Mode', 'Italic Headers', 'Extra Padding', 'Timeline', 'Accent Header'
+            ][i]
+        }));
+
+        const themes = [
+            // Professional
+            { id: 'corporate', name: 'Corporate', primary: '#1a1a2e', accent: '#e94560' },
+            { id: 'navy', name: 'Navy', primary: '#0a1628', accent: '#3b82f6' },
+            { id: 'charcoal', name: 'Charcoal', primary: '#1f2937', accent: '#f59e0b' },
+            { id: 'slate', name: 'Slate', primary: '#334155', accent: '#6366f1' },
+            { id: 'graphite', name: 'Graphite', primary: '#27272a', accent: '#a855f7' },
+            // Nature
+            { id: 'forest', name: 'Forest', primary: '#14532d', accent: '#22c55e' },
+            { id: 'sage', name: 'Sage', primary: '#3f4f3f', accent: '#86efac' },
+            { id: 'olive', name: 'Olive', primary: '#4a5532', accent: '#a3e635' },
+            { id: 'moss', name: 'Moss', primary: '#1a2e1a', accent: '#4ade80' },
+            { id: 'evergreen', name: 'Evergreen', primary: '#064e3b', accent: '#34d399' },
+            // Ocean
+            { id: 'ocean', name: 'Ocean', primary: '#0c4a6e', accent: '#38bdf8' },
+            { id: 'deep-sea', name: 'Deep Sea', primary: '#082f49', accent: '#22d3ee' },
+            { id: 'pacific', name: 'Pacific', primary: '#164e63', accent: '#67e8f9' },
+            { id: 'marine', name: 'Marine', primary: '#0f172a', accent: '#0ea5e9' },
+            { id: 'arctic', name: 'Arctic', primary: '#1e3a5f', accent: '#7dd3fc' },
+            // Warm
+            { id: 'sunset', name: 'Sunset', primary: '#431407', accent: '#fb923c' },
+            { id: 'coral', name: 'Coral', primary: '#3d405b', accent: '#f4845f' },
+            { id: 'terracotta', name: 'Terracotta', primary: '#5c3d2e', accent: '#e07a5f' },
+            { id: 'rust', name: 'Rust', primary: '#4a2c2a', accent: '#dc2626' },
+            { id: 'ember', name: 'Ember', primary: '#292524', accent: '#ef4444' },
+            // Purple
+            { id: 'lavender', name: 'Lavender', primary: '#4a4063', accent: '#a78bfa' },
+            { id: 'plum', name: 'Plum', primary: '#3d2352', accent: '#c084fc' },
+            { id: 'grape', name: 'Grape', primary: '#4c1d95', accent: '#a855f7' },
+            { id: 'violet', name: 'Violet', primary: '#2e1065', accent: '#8b5cf6' },
+            { id: 'mauve', name: 'Mauve', primary: '#44374a', accent: '#d8b4fe' },
+            // Pink/Red
+            { id: 'rose', name: 'Rose', primary: '#4a3f48', accent: '#f43f5e' },
+            { id: 'cherry', name: 'Cherry', primary: '#2b0f0f', accent: '#dc143c' },
+            { id: 'blush', name: 'Blush', primary: '#3f3a3c', accent: '#fb7185' },
+            { id: 'wine', name: 'Wine', primary: '#4a1d2e', accent: '#be185d' },
+            { id: 'magenta', name: 'Magenta', primary: '#4a044e', accent: '#e879f9' },
+            // Neutral
+            { id: 'sand', name: 'Sand', primary: '#44403c', accent: '#d6d3d1' },
+            { id: 'stone', name: 'Stone', primary: '#292524', accent: '#a8a29e' },
+            { id: 'clay', name: 'Clay', primary: '#4a4238', accent: '#c9a959' },
+            { id: 'mocha', name: 'Mocha', primary: '#3e3232', accent: '#a67b5b' },
+            { id: 'espresso', name: 'Espresso', primary: '#2a2118', accent: '#8b7355' },
+            // Neon/Cyber
+            { id: 'cyberpunk', name: 'Cyberpunk', primary: '#0f0f1a', accent: '#ff00ff' },
+            { id: 'neon', name: 'Neon', primary: '#0a0a0a', accent: '#39ff14' },
+            { id: 'electric', name: 'Electric', primary: '#0d0d1a', accent: '#00ffff' },
+            { id: 'matrix', name: 'Matrix', primary: '#0a0f0a', accent: '#00ff41' },
+            { id: 'synthwave', name: 'Synthwave', primary: '#1a0a2e', accent: '#ff6ec7' },
+            // Modern
+            { id: 'nordic', name: 'Nordic', primary: '#2e3440', accent: '#88c0d0' },
+            { id: 'tokyo', name: 'Tokyo', primary: '#1a1b26', accent: '#7aa2f7' },
+            { id: 'dracula', name: 'Dracula', primary: '#282a36', accent: '#ff79c6' },
+            { id: 'monokai', name: 'Monokai', primary: '#272822', accent: '#f92672' },
+            { id: 'github', name: 'GitHub', primary: '#0d1117', accent: '#58a6ff' },
+            // Unique
+            { id: 'gold', name: 'Gold', primary: '#1c1917', accent: '#eab308' },
+            { id: 'bronze', name: 'Bronze', primary: '#292524', accent: '#cd7f32' },
+            { id: 'copper', name: 'Copper', primary: '#2e2622', accent: '#b87333' },
+            { id: 'silver', name: 'Silver', primary: '#27272a', accent: '#94a3b8' },
+            { id: 'mint', name: 'Mint', primary: '#1e3a3a', accent: '#5eead4' }
+        ];
+
+        // ============================================
+        // STATE
+        // ============================================
+        let currentLayout = 1;
+        let currentTheme = 'corporate';
+
+        // ============================================
+        // FUNCTIONS
+        // ============================================
+        function renderLayouts() {
+            const grid = document.getElementById('layoutsGrid');
+            grid.innerHTML = layouts.map(l => `
+                <div class="layout-card ${currentLayout === l.id ? 'active' : ''}" 
+                     onclick="selectLayout(${l.id})" title="${l.name}">
+                    <div class="layout-preview">
+                        <div class="layout-mini" style="background: linear-gradient(180deg, var(--cv-primary) 18%, white 18%);"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderThemes() {
+            const grid = document.getElementById('themesGrid');
+            grid.innerHTML = themes.map(t => `
+                <div class="theme-card ${currentTheme === t.id ? 'active' : ''}" 
+                     onclick="selectTheme('${t.id}')"
+                     style="background: linear-gradient(135deg, ${t.primary} 50%, ${t.accent} 50%);">
+                    <span class="tooltip">${t.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function selectLayout(id) {
+            currentLayout = id;
+            document.querySelectorAll('.layout-card').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            const wrapper = document.getElementById('cvWrapper');
+            wrapper.className = 'cv-wrapper layout-' + id;
+        }
+
+        function selectTheme(id) {
+            currentTheme = id;
+            const theme = themes.find(t => t.id === id);
+            
+            document.querySelectorAll('.theme-card').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            const root = document.documentElement;
+            root.style.setProperty('--cv-primary', theme.primary);
+            root.style.setProperty('--cv-accent', theme.accent);
+            
+            // Derive other colors
+            root.style.setProperty('--cv-bg-subtle', adjustColor('#ffffff', -5));
+            root.style.setProperty('--cv-border', adjustColor('#ffffff', -12));
+        }
+
+        function adjustColor(hex, amount) {
+            const num = parseInt(hex.slice(1), 16);
+            const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+            const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+            const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+            return '#' + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+        }
+
+        function randomize() {
+            const randomLayout = layouts[Math.floor(Math.random() * layouts.length)].id;
+            const randomTheme = themes[Math.floor(Math.random() * themes.length)].id;
+            
+            currentLayout = randomLayout;
+            currentTheme = randomTheme;
+            
+            const wrapper = document.getElementById('cvWrapper');
+            wrapper.className = 'cv-wrapper layout-' + randomLayout;
+            
+            const theme = themes.find(t => t.id === randomTheme);
+            document.documentElement.style.setProperty('--cv-primary', theme.primary);
+            document.documentElement.style.setProperty('--cv-accent', theme.accent);
+            
+            renderLayouts();
+            renderThemes();
+        }
+
+        function updateContent() {
+            document.getElementById('cv-name').textContent = document.getElementById('edit-name').value;
+            document.getElementById('cv-title').textContent = document.getElementById('edit-title').value;
+            document.getElementById('cv-tagline').textContent = document.getElementById('edit-tagline').value;
+            document.getElementById('cv-email').textContent = document.getElementById('edit-email').value;
+            document.getElementById('cv-phone').textContent = document.getElementById('edit-phone').value;
+            document.getElementById('cv-location').textContent = document.getElementById('edit-location').value;
+            document.getElementById('cv-portfolio').textContent = document.getElementById('edit-portfolio').value;
+            document.getElementById('cv-portfolio-link').textContent = document.getElementById('edit-portfolio').value;
+            document.getElementById('cv-linkedin').textContent = document.getElementById('edit-linkedin').value;
+            document.getElementById('cv-summary').textContent = document.getElementById('edit-summary').value;
+            
+            // Update skills
+            const primarySkills = document.getElementById('edit-skills-primary').value.split(',').map(s => s.trim()).filter(s => s);
+            const allSkills = document.getElementById('edit-skills').value.split(',').map(s => s.trim()).filter(s => s);
+            
+            document.getElementById('cv-skills-primary').innerHTML = primarySkills.map(s => 
+                `<span class="cv-skill primary">${s}</span>`
+            ).join('');
+            
+            document.getElementById('cv-skills-all').innerHTML = allSkills.map(s => 
+                `<span class="cv-skill">${s}</span>`
+            ).join('');
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-pane').classList.add('active');
+            });
+        });
+
+        // Initialize
+        renderLayouts();
+        renderThemes();
+    </script>
+</body>
+</html>
+

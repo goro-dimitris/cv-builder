@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Builder — Choose Your Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&family=Playfair+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           BASE STYLES & CSS VARIABLES
+           ============================================ */
+        :root {
+            /* Default Theme - Corporate */
+            --cv-primary: #1a1a2e;
+            --cv-accent: #e94560;
+            --cv-text: #2d3436;
+            --cv-text-light: #636e72;
+            --cv-bg: #ffffff;
+            --cv-bg-subtle: #f8f9fa;
+            --cv-border: #e9ecef;
+            
+            /* App UI */
+            --app-bg: #0f0f1a;
+            --app-surface: #1a1a2e;
+            --app-border: #2d2d4a;
+            --app-text: #ffffff;
+            --app-text-muted: #8b8ba7;
+            --app-accent: #7c3aed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--app-bg);
+            color: var(--app-text);
+            min-height: 100vh;
+        }
+
+        /* ============================================
+           APP LAYOUT
+           ============================================ */
+        .app-container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ============================================
+           SIDEBAR
+           ============================================ */
+        .sidebar {
+            background: var(--app-surface);
+            border-right: 1px solid var(--app-border);
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar-header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-sub {
+            font-size: 12px;
+            color: var(--app-text-muted);
+            margin-top: 4px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--app-text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--app-border);
+        }
+
+        /* Layout Grid */
+        .layouts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .layout-option {
+            aspect-ratio: 0.7;
+            background: var(--app-bg);
+            border: 2px solid var(--app-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            padding: 6px;
+        }
+
+        .layout-option:hover {
+            border-color: var(--app-accent);
+            transform: translateY(-2px);
+        }
+
+        .layout-option.active {
+            border-color: var(--app-accent);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+        }
+
+        .layout-preview {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .layout-name {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: var(--app-text-muted);
+            white-space: nowrap;
+        }
+
+        /* Themes Grid */
+        .themes-section {
+            margin-bottom: 30px;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .theme-option {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-option.active {
+            border-color: #fff;
+            box-shadow: 0 0 0 2px var(--app-accent);
+        }
+
+        .theme-option::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 6px;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .theme-option:hover::after {
+            opacity: 1;
+        }
+
+        /* Download Button */
+        .download-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--app-border);
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .download-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .tip {
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--app-text-muted);
+            text-align: center;
+        }
+
+        /* ============================================
+           PREVIEW AREA
+           ============================================ */
+        .preview-area {
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            overflow-y: auto;
+        }
+
+        .cv-container {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--cv-bg);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            transform-origin: top center;
+        }
+
+        /* ============================================
+           CV STYLES - BASE
+           ============================================ */
+        .cv-page {
+            padding: 40px 50px;
+            min-height: 297mm;
+            font-family: var(--cv-font, 'DM Sans', sans-serif);
+            color: var(--cv-text);
+            background: var(--cv-bg);
+            font-size: 10pt;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           LAYOUT VARIATIONS
+           ============================================ */
+        
+        /* Layout 1: Classic Two-Column */
+        .layout-1 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-1 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 2: Classic Single Column */
+        .layout-2 .cv-main { display: block; }
+        .layout-2 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 30px; }
+        .layout-2 .cv-sidebar > * { flex: 1; min-width: 150px; }
+        
+        /* Layout 3: Left Sidebar */
+        .layout-3 .cv-main { display: grid; grid-template-columns: 180px 1fr; gap: 40px; }
+        .layout-3 .cv-sidebar { order: -1; padding-right: 20px; border-right: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 4: Wide Header */
+        .layout-4 .cv-header { padding: 50px; background: var(--cv-primary); color: white; margin: -40px -50px 40px; }
+        .layout-4 .cv-header .cv-name { color: white; }
+        .layout-4 .cv-header .cv-title { color: var(--cv-accent); }
+        .layout-4 .cv-header .cv-tagline { color: rgba(255,255,255,0.7); }
+        .layout-4 .cv-header .contact-item { color: rgba(255,255,255,0.9); }
+        .layout-4 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-4 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 5: Centered Header */
+        .layout-5 .cv-header { text-align: center; margin-bottom: 40px; }
+        .layout-5 .cv-header-content { display: block; }
+        .layout-5 .cv-contact { justify-content: center; flex-wrap: wrap; margin-top: 15px; }
+        .layout-5 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-5 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 6: Timeline */
+        .layout-6 .cv-main { display: block; }
+        .layout-6 .experience-item { border-left: 3px solid var(--cv-accent); padding-left: 20px; margin-left: 10px; }
+        .layout-6 .experience-item::before { content: ''; width: 12px; height: 12px; background: var(--cv-accent); border-radius: 50%; position: absolute; left: -7px; top: 5px; }
+        .layout-6 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 30px; padding-top: 20px; border-top: 2px solid var(--cv-bg-subtle); }
+        .layout-6 .cv-sidebar > * { flex: 1; min-width: 150px; }
+        
+        /* Layout 7: Compact */
+        .layout-7 .cv-page { padding: 30px 40px; font-size: 9pt; }
+        .layout-7 .cv-main { display: grid; grid-template-columns: 1fr 180px; gap: 30px; }
+        .layout-7 .cv-sidebar { padding-left: 15px; border-left: 2px solid var(--cv-bg-subtle); }
+        .layout-7 .section { margin-bottom: 18px; }
+        .layout-7 .experience-item { margin-bottom: 14px; }
+        
+        /* Layout 8: Modern Cards */
+        .layout-8 .experience-item { background: var(--cv-bg-subtle); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: none; }
+        .layout-8 .experience-item::before { display: none; }
+        .layout-8 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-8 .cv-sidebar { padding-left: 20px; }
+        
+        /* Layout 9: Minimal */
+        .layout-9 .cv-header { border-bottom: none; padding-bottom: 20px; }
+        .layout-9 .cv-header::after { display: none; }
+        .layout-9 .section-title::after { display: none; }
+        .layout-9 .section-title { border-bottom: none; }
+        .layout-9 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-9 .cv-sidebar { padding-left: 20px; border-left: 1px solid var(--cv-border); }
+        
+        /* Layout 10: Bold Headers */
+        .layout-10 .section-title { font-size: 16pt; letter-spacing: 0; text-transform: none; background: var(--cv-primary); color: white; padding: 8px 15px; margin: 0 -50px 20px; padding-left: 50px; }
+        .layout-10 .section-title::after { display: none; }
+        .layout-10 .cv-main { display: block; }
+        .layout-10 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 30px; }
+        .layout-10 .cv-sidebar > * { flex: 1; min-width: 150px; }
+        
+        /* Layout 11: Elegant Serif */
+        .layout-11 { --cv-font: 'Crimson Pro', serif; }
+        .layout-11 .cv-name { font-family: 'Playfair Display', serif; }
+        .layout-11 .section-title { font-family: 'Playfair Display', serif; font-style: italic; }
+        .layout-11 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-11 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 12: Tech/Mono */
+        .layout-12 { --cv-font: 'Space Mono', monospace; }
+        .layout-12 .cv-page { font-size: 9pt; }
+        .layout-12 .cv-name { font-family: 'Space Mono', monospace; letter-spacing: -1px; }
+        .layout-12 .section-title { font-family: 'Space Mono', monospace; }
+        .layout-12 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-12 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 13: Magazine */
+        .layout-13 .cv-header { margin-bottom: 30px; }
+        .layout-13 .cv-name { font-size: 42pt; line-height: 1; }
+        .layout-13 .cv-title { font-size: 18pt; margin-top: 5px; }
+        .layout-13 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-13 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 14: Executive */
+        .layout-14 .cv-page { border: 3px double var(--cv-primary); margin: 10px; padding: 35px 45px; }
+        .layout-14 .cv-header { text-align: center; border-bottom: 2px solid var(--cv-primary); }
+        .layout-14 .cv-header::after { display: none; }
+        .layout-14 .cv-contact { justify-content: center; }
+        .layout-14 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-14 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 15: Creative */
+        .layout-15 .cv-header { background: linear-gradient(135deg, var(--cv-primary), var(--cv-accent)); padding: 40px; margin: -40px -50px 40px; color: white; }
+        .layout-15 .cv-header .cv-name, .layout-15 .cv-header .cv-title { color: white; }
+        .layout-15 .cv-header .cv-tagline, .layout-15 .cv-header .contact-item { color: rgba(255,255,255,0.9); }
+        .layout-15 .skill-tag.highlight { background: var(--cv-accent); }
+        .layout-15 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-15 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 16: Asymmetric */
+        .layout-16 .cv-main { display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
+        .layout-16 .cv-sidebar { order: -1; background: var(--cv-bg-subtle); padding: 20px; margin: -40px 0 -40px -50px; padding-left: 50px; }
+        
+        /* Layout 17: Grid Layout */
+        .layout-17 .cv-main { display: block; }
+        .layout-17 .experiences-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .layout-17 .experience-item { padding-left: 0; border-left: none; background: var(--cv-bg-subtle); padding: 12px; border-radius: 6px; }
+        .layout-17 .experience-item::before { display: none; }
+        .layout-17 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 30px; }
+        .layout-17 .cv-sidebar > * { flex: 1; min-width: 150px; }
+        
+        /* Layout 18: Infographic */
+        .layout-18 .cv-header { display: flex; align-items: center; gap: 30px; }
+        .layout-18 .cv-avatar { width: 100px; height: 100px; background: var(--cv-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36pt; font-weight: 600; }
+        .layout-18 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-18 .cv-sidebar { padding-left: 20px; border-left: 2px solid var(--cv-bg-subtle); }
+        
+        /* Layout 19: Swiss */
+        .layout-19 .cv-page { background: var(--cv-bg); }
+        .layout-19 .cv-header { border-bottom: 4px solid var(--cv-primary); }
+        .layout-19 .cv-header::after { display: none; }
+        .layout-19 .section-title { color: var(--cv-accent); border-bottom: 2px solid var(--cv-accent); display: inline-block; }
+        .layout-19 .section-title::after { display: none; }
+        .layout-19 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-19 .cv-sidebar { padding-left: 20px; }
+        
+        /* Layout 20: Brutalist */
+        .layout-20 .cv-page { background: var(--cv-bg); border: 4px solid var(--cv-primary); }
+        .layout-20 .cv-header { background: var(--cv-primary); color: white; padding: 30px; margin: -40px -50px 30px; }
+        .layout-20 .cv-header .cv-name { color: white; text-transform: uppercase; letter-spacing: 3px; }
+        .layout-20 .cv-header .cv-title { color: var(--cv-accent); }
+        .layout-20 .cv-header .cv-tagline, .layout-20 .cv-header .contact-item { color: rgba(255,255,255,0.8); }
+        .layout-20 .section-title { background: var(--cv-primary); color: white; padding: 5px 10px; display: inline-block; }
+        .layout-20 .section-title::after { display: none; }
+        .layout-20 .cv-main { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .layout-20 .cv-sidebar { padding-left: 20px; border-left: 4px solid var(--cv-primary); }
+
+        /* ============================================
+           CV CONTENT STYLES
+           ============================================ */
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid var(--cv-primary);
+            position: relative;
+        }
+
+        .cv-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 120px;
+            height: 3px;
+            background: var(--cv-accent);
+        }
+
+        .cv-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .cv-header-left { flex: 1; }
+
+        .cv-name {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 32pt;
+            font-weight: 600;
+            color: var(--cv-primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            line-height: 1.1;
+        }
+
+        .cv-title {
+            font-size: 14pt;
+            font-weight: 500;
+            color: var(--cv-accent);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .cv-tagline {
+            font-size: 10pt;
+            color: var(--cv-text-light);
+            font-style: italic;
+        }
+
+        .cv-contact {
+            text-align: right;
+            font-size: 9pt;
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            color: var(--cv-text);
+        }
+
+        .contact-icon {
+            width: 14px;
+            height: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cv-primary);
+            color: white;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: 600;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 12pt;
+            font-weight: 600;
+            color: var(--cv-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--cv-accent);
+        }
+
+        .cv-summary {
+            font-size: 10.5pt;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .cv-summary strong { color: var(--cv-primary); }
+
+        .experience-item {
+            margin-bottom: 22px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 6px;
+            height: 6px;
+            background: var(--cv-accent);
+            border-radius: 50%;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .job-title {
+            font-weight: 600;
+            font-size: 11pt;
+            color: var(--cv-primary);
+        }
+
+        .date-range {
+            font-size: 9pt;
+            color: var(--cv-text-light);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .company-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .company-name {
+            font-weight: 500;
+            color: var(--cv-accent);
+            font-size: 10pt;
+        }
+
+        .location {
+            font-size: 9pt;
+            color: var(--cv-text-light);
+        }
+
+        .location::before {
+            content: '·';
+            margin-right: 8px;
+        }
+
+        .experience-description {
+            font-size: 9.5pt;
+            color: var(--cv-text);
+            line-height: 1.6;
+        }
+
+        .experience-description ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .experience-description li {
+            margin-bottom: 3px;
+        }
+
+        .skills-category {
+            margin-bottom: 16px;
+        }
+
+        .skills-category-title {
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--cv-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            background: var(--cv-bg-subtle);
+            color: var(--cv-text);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+            font-weight: 500;
+            border: 1px solid var(--cv-border);
+        }
+
+        .skill-tag.highlight {
+            background: var(--cv-primary);
+            color: white;
+            border-color: var(--cv-primary);
+        }
+
+        .education-item {
+            margin-bottom: 14px;
+        }
+
+        .education-degree {
+            font-weight: 600;
+            font-size: 9.5pt;
+            color: var(--cv-primary);
+        }
+
+        .education-school {
+            font-size: 9pt;
+            color: var(--cv-text);
+            margin-bottom: 2px;
+        }
+
+        .education-date {
+            font-size: 8.5pt;
+            color: var(--cv-text-light);
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 9pt;
+        }
+
+        .language-name {
+            font-weight: 500;
+            color: var(--cv-text);
+        }
+
+        .language-level {
+            font-size: 8pt;
+            color: var(--cv-text-light);
+            background: var(--cv-bg-subtle);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .cert-item {
+            margin-bottom: 10px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 9pt;
+        }
+
+        .cert-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--cv-accent);
+            font-weight: 600;
+            font-size: 8pt;
+        }
+
+        .cert-name {
+            font-weight: 500;
+            color: var(--cv-text);
+        }
+
+        .cert-issuer {
+            font-size: 8pt;
+            color: var(--cv-text-light);
+        }
+
+        .portfolio-link {
+            background: linear-gradient(135deg, var(--cv-primary), color-mix(in srgb, var(--cv-primary) 70%, var(--cv-accent)));
+            color: white;
+            padding: 14px 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .portfolio-link .label {
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .portfolio-link .url {
+            font-weight: 600;
+            font-size: 10pt;
+            color: white;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; }
+            .sidebar { display: none; }
+            .app-container { display: block; }
+            .preview-area { padding: 0; background: white; }
+            .cv-container { box-shadow: none; width: 100%; }
+            .skill-tag.highlight { background: var(--cv-primary) !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .portfolio-link { background: var(--cv-primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">CV Builder</div>
+                <div class="logo-sub">Choose your style & theme</div>
+            </div>
+
+            <!-- Layouts Section -->
+            <div class="section-title">Layout Style</div>
+            <div class="layouts-grid" id="layoutsGrid">
+                <!-- Layouts will be generated by JS -->
+            </div>
+
+            <!-- Themes Section -->
+            <div class="themes-section">
+                <div class="section-title">Color Theme</div>
+                <div class="themes-grid" id="themesGrid">
+                    <!-- Themes will be generated by JS -->
+                </div>
+            </div>
+
+            <!-- Download Section -->
+            <div class="download-section">
+                <button class="download-btn" onclick="downloadPDF()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Download PDF
+                </button>
+                <p class="tip">Opens print dialog • Enable "Background graphics"</p>
+            </div>
+        </aside>
+
+        <!-- Preview Area -->
+        <main class="preview-area">
+            <div class="cv-container" id="cvContainer">
+                <div class="cv-page" id="cvPage">
+                    <!-- CV Header -->
+                    <header class="cv-header">
+                        <div class="cv-header-content">
+                            <div class="cv-header-left">
+                                <div class="cv-avatar">DG</div>
+                                <h1 class="cv-name">Dimitrios Gkorovelis</h1>
+                                <div class="cv-title">Senior UX Designer</div>
+                                <div class="cv-tagline">Transforming ideas into delightful digital experiences</div>
+                            </div>
+                            <div class="cv-contact">
+                                <div class="contact-item">
+                                    <span class="contact-icon">@</span>
+                                    <span>gorodimitris@gmail.com</span>
+                                </div>
+                                <div class="contact-item">
+                                    <span class="contact-icon">☎</span>
+                                    <span>+45 52 73 68 55</span>
+                                </div>
+                                <div class="contact-item">
+                                    <span class="contact-icon">in</span>
+                                    <span>linkedin.com/in/gorodimitris</span>
+                                </div>
+                                <div class="contact-item">
+                                    <span class="contact-icon">🌐</span>
+                                    <span>gorodimitris.gr</span>
+                                </div>
+                                <div class="contact-item">
+                                    <span class="contact-icon">📍</span>
+                                    <span>Copenhagen, Denmark</span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Main Content -->
+                    <div class="cv-main">
+                        <!-- Left Column -->
+                        <div class="cv-content">
+                            <!-- Summary -->
+                            <section class="section">
+                                <h2 class="section-title">Professional Summary</h2>
+                                <p class="cv-summary">
+                                    <strong>8+ years of experience</strong> transforming the tech and marketing world through creativity and design. As a Senior UX Designer where creativity meets AI, I specialize in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems. My mission is to make technology not just usable, but <strong>enjoyable for everyone</strong>.
+                                </p>
+                            </section>
+
+                            <!-- Experience -->
+                            <section class="section">
+                                <h2 class="section-title">Work Experience</h2>
+                                <div class="experiences-grid">
+                                    <div class="experience-item">
+                                        <div class="experience-header">
+                                            <span class="job-title">Senior UX Designer</span>
+                                            <span class="date-range">Feb 2024 — Present</span>
+                                        </div>
+                                        <div class="company-line">
+                                            <span class="company-name">GUT Copenhagen (Globant)</span>
+                                            <span class="location">Copenhagen</span>
+                                        </div>
+                                        <div class="experience-description">
+                                            <ul>
+                                                <li>Lead UX design initiatives at the intersection of creativity and AI</li>
+                                                <li>Conduct UX audits and user testing sessions</li>
+                                                <li>Design and maintain scalable design systems</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-header">
+                                            <span class="job-title">Freelance Product Designer</span>
+                                            <span class="date-range">Oct 2016 — Present</span>
+                                        </div>
+                                        <div class="company-line">
+                                            <span class="company-name">Self-Employed</span>
+                                            <span class="location">Athens & Remote</span>
+                                        </div>
+                                        <div class="experience-description">
+                                            <ul>
+                                                <li>End-to-end product design with accessibility focus</li>
+                                                <li>Wireframes, prototypes, and animated interactions</li>
+                                                <li>Mobile app and web projects with branding</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-header">
+                                            <span class="job-title">Product Designer</span>
+                                            <span class="date-range">Jan 2023 — Feb 2024</span>
+                                        </div>
+                                        <div class="company-line">
+                                            <span class="company-name">Atos</span>
+                                            <span class="location">Copenhagen</span>
+                                        </div>
+                                        <div class="experience-description">
+                                            <ul>
+                                                <li>B2B traceability software for enterprise workflows</li>
+                                                <li>Intuitive interfaces for data-heavy applications</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-header">
+                                            <span class="job-title">Visual & Interaction Designer</span>
+                                            <span class="date-range">Jul 2021 — Jan 2023</span>
+                                        </div>
+                                        <div class="company-line">
+                                            <span class="company-name">WhiteSpace</span>
+                                            <span class="location">Athens</span>
+                                        </div>
+                                        <div class="experience-description">
+                                            <ul>
+                                                <li>User flows and interactive prototypes in agile</li>
+                                                <li>Design thinking methodologies</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-header">
+                                            <span class="job-title">Graphic Web Designer</span>
+                                            <span class="date-range">Jan 2019 — Jul 2021</span>
+                                        </div>
+                                        <div class="company-line">
+                                            <span class="company-name">ForestView</span>
+                                            <span class="location">Athens</span>
+                                        </div>
+                                        <div class="experience-description">
+                                            <ul>
+                                                <li>UI/UX designs, wireframes, and prototypes</li>
+                                                <li>Product strategy and user testing</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-header">
+                                            <span class="job-title">Digital Designer</span>
+                                            <span class="date-range">Mar 2017 — Dec 2018</span>
+                                        </div>
+                                        <div class="company-line">
+                                            <span class="company-name">Digital Peak</span>
+                                            <span class="location">Athens</span>
+                                        </div>
+                                        <div class="experience-description">
+                                            <ul>
+                                                <li>UI/UX, web design, branding, animations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <aside class="cv-sidebar">
+                            <!-- Skills -->
+                            <div class="section">
+                                <h2 class="section-title">Skills</h2>
+                                <div class="skills-category">
+                                    <div class="skills-category-title">Design</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag highlight">UX Design</span>
+                                        <span class="skill-tag highlight">UI Design</span>
+                                        <span class="skill-tag">Design Systems</span>
+                                        <span class="skill-tag">User Research</span>
+                                        <span class="skill-tag">Wireframing</span>
+                                        <span class="skill-tag">Prototyping</span>
+                                    </div>
+                                </div>
+                                <div class="skills-category">
+                                    <div class="skills-category-title">Tools</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag highlight">Figma</span>
+                                        <span class="skill-tag">Adobe XD</span>
+                                        <span class="skill-tag">Sketch</span>
+                                        <span class="skill-tag">ProtoPie</span>
+                                    </div>
+                                </div>
+                                <div class="skills-category">
+                                    <div class="skills-category-title">Technical</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag">HTML</span>
+                                        <span class="skill-tag">CSS</span>
+                                        <span class="skill-tag">Accessibility</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Education -->
+                            <div class="section">
+                                <h2 class="section-title">Education</h2>
+                                <div class="education-item">
+                                    <div class="education-degree">Graphic Design</div>
+                                    <div class="education-school">TEI of Athens</div>
+                                    <div class="education-date">2009 — 2017</div>
+                                </div>
+                            </div>
+
+                            <!-- Languages -->
+                            <div class="section">
+                                <h2 class="section-title">Languages</h2>
+                                <div class="language-item">
+                                    <span class="language-name">Greek</span>
+                                    <span class="language-level">Native</span>
+                                </div>
+                                <div class="language-item">
+                                    <span class="language-name">English</span>
+                                    <span class="language-level">Fluent</span>
+                                </div>
+                            </div>
+
+                            <!-- Certifications -->
+                            <div class="section">
+                                <h2 class="section-title">Certifications</h2>
+                                <div class="cert-item">
+                                    <div class="cert-name">Emotional Design</div>
+                                </div>
+                                <div class="cert-item">
+                                    <div class="cert-name">UX Fundamentals</div>
+                                </div>
+                                <div class="cert-item">
+                                    <div class="cert-name">User Research</div>
+                                </div>
+                            </div>
+
+                            <!-- Portfolio -->
+                            <div class="portfolio-link">
+                                <div class="label">Portfolio</div>
+                                <div class="url">gorodimitris.gr</div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ============================================
+        // LAYOUTS DATA
+        // ============================================
+        const layouts = [
+            { id: 1, name: 'Two-Column', desc: 'Classic professional' },
+            { id: 2, name: 'Single Column', desc: 'Traditional' },
+            { id: 3, name: 'Left Sidebar', desc: 'Skills first' },
+            { id: 4, name: 'Wide Header', desc: 'Bold statement' },
+            { id: 5, name: 'Centered', desc: 'Balanced' },
+            { id: 6, name: 'Timeline', desc: 'Chronological' },
+            { id: 7, name: 'Compact', desc: 'Dense info' },
+            { id: 8, name: 'Cards', desc: 'Modern blocks' },
+            { id: 9, name: 'Minimal', desc: 'Clean & simple' },
+            { id: 10, name: 'Bold Headers', desc: 'Strong sections' },
+            { id: 11, name: 'Elegant', desc: 'Serif refined' },
+            { id: 12, name: 'Tech', desc: 'Monospace' },
+            { id: 13, name: 'Magazine', desc: 'Editorial' },
+            { id: 14, name: 'Executive', desc: 'Formal' },
+            { id: 15, name: 'Creative', desc: 'Gradient header' },
+            { id: 16, name: 'Asymmetric', desc: 'Unique flow' },
+            { id: 17, name: 'Grid', desc: 'Card layout' },
+            { id: 18, name: 'Infographic', desc: 'Visual focus' },
+            { id: 19, name: 'Swiss', desc: 'Grid-based' },
+            { id: 20, name: 'Brutalist', desc: 'Bold & raw' }
+        ];
+
+        // ============================================
+        // THEMES DATA
+        // ============================================
+        const themes = [
+            { id: 'corporate', name: 'Corporate', primary: '#1a1a2e', accent: '#e94560', bg: '#ffffff' },
+            { id: 'nature', name: 'Nature', primary: '#2d5a27', accent: '#8bc34a', bg: '#fafff8' },
+            { id: 'ocean', name: 'Ocean', primary: '#0d3b66', accent: '#00b4d8', bg: '#f8fcff' },
+            { id: 'sunset', name: 'Sunset', primary: '#4a1942', accent: '#ff6b35', bg: '#fffaf5' },
+            { id: 'cyberpunk', name: 'Cyberpunk', primary: '#0f0e17', accent: '#ff00ff', bg: '#fffffe' },
+            { id: 'forest', name: 'Forest', primary: '#1b4332', accent: '#40916c', bg: '#f5fbf5' },
+            { id: 'lavender', name: 'Lavender', primary: '#4a4063', accent: '#9d8df1', bg: '#faf8ff' },
+            { id: 'coral', name: 'Coral', primary: '#3d405b', accent: '#f4845f', bg: '#fff9f5' },
+            { id: 'midnight', name: 'Midnight', primary: '#0f1624', accent: '#4fc3f7', bg: '#f8fafc' },
+            { id: 'terracotta', name: 'Terracotta', primary: '#5c3d2e', accent: '#e07a5f', bg: '#fdf6f0' },
+            { id: 'mint', name: 'Mint', primary: '#2e4a4a', accent: '#5dd9c1', bg: '#f0faf8' },
+            { id: 'wine', name: 'Wine', primary: '#4a1d2e', accent: '#b22b5b', bg: '#fdf5f7' },
+            { id: 'golden', name: 'Golden', primary: '#3d3522', accent: '#d4a853', bg: '#fdfbf5' },
+            { id: 'nordic', name: 'Nordic', primary: '#2e3440', accent: '#88c0d0', bg: '#eceff4' },
+            { id: 'cherry', name: 'Cherry', primary: '#2b0f0f', accent: '#dc143c', bg: '#fff5f5' },
+            { id: 'sage', name: 'Sage', primary: '#3e4a3d', accent: '#9caf88', bg: '#f5f7f4' },
+            { id: 'slate', name: 'Slate', primary: '#334155', accent: '#6366f1', bg: '#f8fafc' },
+            { id: 'sand', name: 'Sand', primary: '#4a4238', accent: '#c9a959', bg: '#faf8f0' },
+            { id: 'rose', name: 'Rose', primary: '#4a3f48', accent: '#e8838f', bg: '#fef6f7' },
+            { id: 'electric', name: 'Electric', primary: '#1a1a2e', accent: '#00ff88', bg: '#f5fff8' },
+            { id: 'mocha', name: 'Mocha', primary: '#3e3232', accent: '#a67b5b', bg: '#faf5f0' },
+            { id: 'arctic', name: 'Arctic', primary: '#1e3a5f', accent: '#a0d2db', bg: '#f0f8ff' },
+            { id: 'neon', name: 'Neon', primary: '#0a0a0a', accent: '#39ff14', bg: '#ffffff' },
+            { id: 'plum', name: 'Plum', primary: '#3d2352', accent: '#9b59b6', bg: '#faf5ff' },
+            { id: 'steel', name: 'Steel', primary: '#2f3640', accent: '#718093', bg: '#f5f6fa' }
+        ];
+
+        // ============================================
+        // STATE
+        // ============================================
+        let currentLayout = 1;
+        let currentTheme = 'corporate';
+
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
+        function renderLayouts() {
+            const grid = document.getElementById('layoutsGrid');
+            grid.innerHTML = layouts.map(layout => `
+                <div class="layout-option ${currentLayout === layout.id ? 'active' : ''}" 
+                     onclick="selectLayout(${layout.id})" 
+                     title="${layout.name}: ${layout.desc}">
+                    <div class="layout-preview" style="background: linear-gradient(180deg, #1a1a2e 15%, #fff 15%);"></div>
+                    <span class="layout-name">${layout.id}. ${layout.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderThemes() {
+            const grid = document.getElementById('themesGrid');
+            grid.innerHTML = themes.map(theme => `
+                <div class="theme-option ${currentTheme === theme.id ? 'active' : ''}" 
+                     onclick="selectTheme('${theme.id}')"
+                     data-name="${theme.name}"
+                     style="background: linear-gradient(135deg, ${theme.primary} 50%, ${theme.accent} 50%);">
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // SELECTION FUNCTIONS
+        // ============================================
+        function selectLayout(id) {
+            currentLayout = id;
+            
+            // Update UI
+            document.querySelectorAll('.layout-option').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Apply layout class
+            const cvContainer = document.getElementById('cvContainer');
+            cvContainer.className = 'cv-container layout-' + id;
+        }
+
+        function selectTheme(id) {
+            currentTheme = id;
+            const theme = themes.find(t => t.id === id);
+            
+            // Update UI
+            document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Apply theme colors
+            const root = document.documentElement;
+            root.style.setProperty('--cv-primary', theme.primary);
+            root.style.setProperty('--cv-accent', theme.accent);
+            root.style.setProperty('--cv-bg', theme.bg);
+            
+            // Calculate subtle bg and border
+            root.style.setProperty('--cv-bg-subtle', adjustColor(theme.bg, -5));
+            root.style.setProperty('--cv-border', adjustColor(theme.bg, -15));
+        }
+
+        function adjustColor(hex, amount) {
+            const num = parseInt(hex.slice(1), 16);
+            const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+            const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+            const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+            return '#' + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        renderLayouts();
+        renderThemes();
+        selectLayout(1);
+        selectTheme('corporate');
+    </script>
+</body>
+</html>
+
