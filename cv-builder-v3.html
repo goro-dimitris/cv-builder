@@ -22,17 +22,19 @@
         
         /* Panel */
         .panel { background: var(--ui-surface); border-right: 1px solid var(--ui-border); display: flex; flex-direction: column; height: 100vh; }
-        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--ui-border); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--ui-border); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
         .logo { display: flex; align-items: center; gap: 10px; }
         .logo-icon { width: 36px; height: 36px; background: var(--ui-accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; }
         .logo-text { font-weight: 700; font-size: 18px; }
         .logo-text span { color: var(--ui-accent); }
-        .header-buttons { display: flex; gap: 8px; }
-        .btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border: none; border-radius: 6px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+        .header-buttons { display: flex; gap: 6px; }
+        .btn { display: flex; align-items: center; gap: 5px; padding: 7px 12px; border: none; border-radius: 6px; font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
         .btn-primary { background: linear-gradient(135deg, var(--ui-accent), #e07a5f); color: white; }
         .btn-primary:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(196,92,62,0.3); }
         .btn-secondary { background: var(--ui-bg); color: var(--ui-text); border: 1px solid var(--ui-border); }
         .btn-secondary:hover { background: var(--ui-border); }
+        .btn-ai { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; }
+        .btn-ai:hover { box-shadow: 0 4px 12px rgba(139,92,246,0.4); }
         .btn svg { width: 14px; height: 14px; }
         
         /* Tabs */
@@ -56,17 +58,17 @@
         .layout-card:hover, .layout-card.active { border-color: var(--ui-accent); }
         .layout-card.active::after { content: '✓'; position: absolute; top: 2px; right: 2px; width: 12px; height: 12px; background: var(--ui-accent); color: white; border-radius: 50%; font-size: 7px; display: flex; align-items: center; justify-content: center; }
         .themes-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
-        .theme-card { aspect-ratio: 1; border-radius: 6px; cursor: pointer; transition: all 0.15s; border: 2px solid transparent; position: relative; }
+        .theme-card { aspect-ratio: 1; border-radius: 6px; cursor: pointer; transition: all 0.15s; border: 2px solid transparent; }
         .theme-card:hover { transform: scale(1.1); z-index: 1; }
         .theme-card.active { border-color: var(--ui-text); box-shadow: 0 0 0 2px var(--ui-accent); }
         .fonts-grid { display: grid; gap: 6px; }
-        .font-card { background: var(--ui-bg); border: 2px solid var(--ui-border); border-radius: 6px; padding: 10px 12px; cursor: pointer; transition: all 0.15s; }
+        .font-card { background: var(--ui-bg); border: 2px solid var(--ui-border); border-radius: 6px; padding: 10px 12px; cursor: pointer; }
         .font-card:hover, .font-card.active { border-color: var(--ui-accent); }
         .font-preview-heading { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
         .font-preview-body { font-size: 10px; color: var(--ui-text-muted); }
-        .font-name { font-size: 8px; color: var(--ui-accent); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .font-name { font-size: 8px; color: var(--ui-accent); margin-top: 4px; text-transform: uppercase; }
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .photo-card { aspect-ratio: 1; border: 2px solid var(--ui-border); border-radius: 8px; cursor: pointer; overflow: hidden; position: relative; }
+        .photo-card { aspect-ratio: 1; border: 2px solid var(--ui-border); border-radius: 8px; cursor: pointer; overflow: hidden; }
         .photo-card:hover, .photo-card.active { border-color: var(--ui-accent); }
         .photo-card img { width: 100%; height: 100%; object-fit: cover; }
         .photo-card.no-photo { display: flex; align-items: center; justify-content: center; background: var(--ui-bg); font-size: 10px; color: var(--ui-text-muted); }
@@ -85,7 +87,7 @@
         .exp-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .exp-card-title { font-weight: 600; font-size: 12px; }
         .exp-card-remove { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 16px; padding: 0 4px; }
-        .add-btn { width: 100%; padding: 10px; background: var(--ui-bg); border: 2px dashed var(--ui-border); border-radius: 8px; color: var(--ui-text-muted); font-family: inherit; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+        .add-btn { width: 100%; padding: 10px; background: var(--ui-bg); border: 2px dashed var(--ui-border); border-radius: 8px; color: var(--ui-text-muted); font-family: inherit; font-size: 11px; cursor: pointer; }
         .add-btn:hover { border-color: var(--ui-accent); color: var(--ui-accent); }
         
         /* Download */
@@ -97,7 +99,7 @@
         .preview { background: linear-gradient(145deg, #e8e0d5, #d5cdc2); padding: 30px; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; }
         .cv-wrapper { width: 210mm; min-height: 297mm; background: white; box-shadow: 0 20px 80px rgba(0,0,0,0.15); border-radius: 2px; overflow: hidden; }
         
-        /* Banner Patterns */
+        /* Banner */
         .cv-banner { height: 50px; width: 100%; background: var(--cv-primary); position: relative; overflow: hidden; }
         .cv-banner.pattern-none { display: none; }
         .cv-banner.pattern-dots::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 10px 10px; }
@@ -137,7 +139,7 @@
         .cv-exp-desc li { margin-bottom: 1px; }
         .cv-sidebar { padding-left: 15px; border-left: 1px solid var(--cv-border); }
         .cv-skills { margin-bottom: 10px; }
-        .cv-skills-title { font-size: 8pt; font-weight: 600; color: var(--cv-primary); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .cv-skills-title { font-size: 8pt; font-weight: 600; color: var(--cv-primary); margin-bottom: 5px; text-transform: uppercase; }
         .cv-skills-list { display: flex; flex-wrap: wrap; gap: 3px; }
         .cv-skill { background: var(--cv-bg-subtle); color: var(--cv-text); padding: 2px 6px; border-radius: 3px; font-size: 7.5pt; border: 1px solid var(--cv-border); }
         .cv-skill.primary { background: var(--cv-primary); color: white; border-color: var(--cv-primary); }
@@ -154,18 +156,21 @@
         .cv-portfolio-url { font-weight: 600; font-size: 8.5pt; }
         .cv-portfolio a { color: white; text-decoration: none; }
         
-        /* ATS Modal */
+        /* Modals */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
         .modal-overlay.active { display: flex; }
         .modal { background: white; border-radius: 12px; width: 100%; max-width: 700px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
         .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--ui-border); display: flex; justify-content: space-between; align-items: center; }
-        .modal-title { font-size: 18px; font-weight: 700; }
+        .modal-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ui-text-muted); }
         .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
         .modal-footer { padding: 16px 24px; border-top: 1px solid var(--ui-border); display: flex; justify-content: flex-end; gap: 10px; }
+        
+        /* ATS Styles */
         .ats-input-section { margin-bottom: 20px; }
         .ats-input-section label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
-        .ats-input-section textarea { width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--ui-border); border-radius: 8px; font-family: inherit; font-size: 12px; resize: vertical; }
+        .ats-input-section textarea, .ats-input-section input { width: 100%; padding: 12px; border: 1px solid var(--ui-border); border-radius: 8px; font-family: inherit; font-size: 12px; }
+        .ats-input-section textarea { min-height: 100px; resize: vertical; }
         .ats-results { margin-top: 20px; }
         .ats-score { text-align: center; padding: 20px; background: var(--ui-bg); border-radius: 12px; margin-bottom: 20px; }
         .ats-score-value { font-size: 48px; font-weight: 700; }
@@ -179,10 +184,41 @@
         .ats-issue.warning .ats-issue-type { background: #f59e0b; }
         .ats-issue.success .ats-issue-type { background: #22c55e; }
         .ats-issue-desc { font-size: 12px; color: var(--ui-text-muted); margin-bottom: 8px; }
-        .ats-issue-action { font-size: 11px; padding: 6px 12px; background: var(--ui-accent); color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .ats-issue-action:hover { background: var(--ui-accent-hover); }
+        .ats-issue-action { font-size: 11px; padding: 6px 12px; background: var(--ui-accent); color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 6px; }
+        .ats-issue-action:hover { opacity: 0.9; }
+        .ats-issue-action.ai { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
         
-        /* Layout variations (simplified) */
+        /* AI Fix Modal */
+        .ai-fix-modal { max-width: 600px; }
+        .ai-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding: 16px; background: var(--ui-bg); border-radius: 10px; }
+        .ai-progress-step { width: 32px; height: 32px; border-radius: 50%; background: var(--ui-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--ui-text-muted); }
+        .ai-progress-step.active { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; }
+        .ai-progress-step.done { background: #22c55e; color: white; }
+        .ai-progress-line { flex: 1; height: 2px; background: var(--ui-border); }
+        .ai-progress-line.done { background: #22c55e; }
+        .ai-current-issue { background: #fef3c7; border: 1px solid #fde68a; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+        .ai-current-issue h4 { font-size: 14px; margin-bottom: 6px; }
+        .ai-current-issue p { font-size: 12px; color: var(--ui-text-muted); }
+        .ai-suggestion { background: linear-gradient(135deg, #ede9fe, #e0e7ff); border: 1px solid #c4b5fd; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+        .ai-suggestion-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7c3aed; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .ai-suggestion-content { font-size: 13px; line-height: 1.6; background: white; padding: 12px; border-radius: 6px; white-space: pre-wrap; }
+        .ai-loading { text-align: center; padding: 40px; }
+        .ai-loading-spinner { width: 40px; height: 40px; border: 3px solid var(--ui-border); border-top-color: #8b5cf6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .ai-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .ai-actions .btn { padding: 10px 20px; font-size: 13px; }
+        
+        /* API Key Section */
+        .api-key-section { background: #fef3c7; border: 1px solid #fde68a; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+        .api-key-section h4 { font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .api-key-section p { font-size: 11px; color: var(--ui-text-muted); margin-bottom: 12px; }
+        .api-key-input { display: flex; gap: 8px; }
+        .api-key-input input { flex: 1; padding: 10px 12px; border: 1px solid var(--ui-border); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+        .api-key-status { display: flex; align-items: center; gap: 6px; font-size: 11px; margin-top: 8px; }
+        .api-key-status.valid { color: #22c55e; }
+        .api-key-status.invalid { color: #e74c3c; }
+        
+        /* Layout variations */
         .layout-1 .cv-main { grid-template-columns: 1fr 160px; }
         .layout-2 .cv-main { display: block; }
         .layout-2 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 16px; border: none; padding: 14px 0 0 0; margin-top: 14px; border-top: 1px solid var(--cv-border); }
@@ -218,14 +254,9 @@
             <div class="panel-header">
                 <div class="logo"><div class="logo-icon">CV</div><div class="logo-text">CV <span>Studio</span></div></div>
                 <div class="header-buttons">
-                    <button class="btn btn-secondary" onclick="openATSModal()">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        ATS Check
-                    </button>
-                    <button class="btn btn-primary" onclick="randomize()">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                        Random
-                    </button>
+                    <button class="btn btn-secondary" onclick="openATSModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>ATS</button>
+                    <button class="btn btn-ai" onclick="openAIFixModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>AI Fix</button>
+                    <button class="btn btn-primary" onclick="randomize()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
                 </div>
             </div>
             <div class="tabs">
@@ -237,7 +268,6 @@
                 <div class="tab" data-tab="banner">Banner</div>
             </div>
             <div class="tab-content">
-                <!-- Content Pane -->
                 <div class="tab-pane active" id="content-pane">
                     <div class="section-header"><span class="section-title">Personal Info</span></div>
                     <div class="editor-section"><label class="editor-label">Full Name</label><input type="text" class="editor-input" id="edit-name" value="Dimitrios Gkorovelis" oninput="updateCV()"></div>
@@ -252,70 +282,33 @@
                         <div class="editor-section"><label class="editor-label">Portfolio URL</label><input type="url" class="editor-input" id="edit-portfolio" value="https://gorodimitris.gr" oninput="updateCV()"></div>
                     </div>
                     <div class="editor-section"><label class="editor-label">LinkedIn URL</label><input type="text" class="editor-input" id="edit-linkedin" value="https://linkedin.com/in/gorodimitris" oninput="updateCV()"></div>
-                    
                     <div class="section-header"><span class="section-title">Summary</span></div>
                     <div class="editor-section"><textarea class="editor-input editor-textarea" id="edit-summary" oninput="updateCV()">8+ years of experience transforming the tech and marketing world through creativity and design. Specializing in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems.</textarea></div>
-                    
                     <div class="section-header"><span class="section-title">Work Experience</span></div>
                     <div id="experiences-editor"></div>
                     <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
-                    
                     <div class="section-header"><span class="section-title">Education</span></div>
                     <div id="education-editor"></div>
                     <button class="add-btn" onclick="addEducation()">+ Add Education</button>
-                    
                     <div class="section-header"><span class="section-title">Skills</span></div>
-                    <div class="editor-section"><label class="editor-label">Primary Skills (comma separated)</label><input type="text" class="editor-input" id="edit-skills-primary" value="UX Design, UI Design, Figma" oninput="updateCV()"></div>
-                    <div class="editor-section"><label class="editor-label">All Skills (comma separated)</label><textarea class="editor-input editor-textarea" id="edit-skills" oninput="updateCV()">Design Systems, User Research, Wireframing, Prototyping, Adobe XD, Sketch, ProtoPie, HTML, CSS, Accessibility</textarea></div>
-                    
+                    <div class="editor-section"><label class="editor-label">Primary Skills</label><input type="text" class="editor-input" id="edit-skills-primary" value="UX Design, UI Design, Figma" oninput="updateCV()"></div>
+                    <div class="editor-section"><label class="editor-label">All Skills</label><textarea class="editor-input editor-textarea" id="edit-skills" oninput="updateCV()">Design Systems, User Research, Wireframing, Prototyping, Adobe XD, Sketch, ProtoPie, HTML, CSS, Accessibility</textarea></div>
                     <div class="section-header"><span class="section-title">Languages</span></div>
                     <div id="languages-editor"></div>
                     <button class="add-btn" onclick="addLanguage()">+ Add Language</button>
-                    
                     <div class="section-header"><span class="section-title">Certifications</span></div>
-                    <div class="editor-section"><label class="editor-label">Certifications (one per line)</label><textarea class="editor-input editor-textarea" id="edit-certs" oninput="updateCV()">Emotional Design
+                    <div class="editor-section"><textarea class="editor-input editor-textarea" id="edit-certs" oninput="updateCV()">Emotional Design
 UX Fundamentals
 User Research Methods</textarea></div>
                 </div>
-                
-                <!-- Layouts Pane -->
-                <div class="tab-pane" id="layouts-pane">
-                    <div class="section-header"><span class="section-title">Choose Layout</span><span class="section-count">10 styles</span></div>
-                    <div class="layouts-grid" id="layoutsGrid"></div>
-                </div>
-                
-                <!-- Themes Pane -->
-                <div class="tab-pane" id="themes-pane">
-                    <div class="section-header"><span class="section-title">Color Themes</span><span class="section-count">30 palettes</span></div>
-                    <div class="themes-grid" id="themesGrid"></div>
-                </div>
-                
-                <!-- Fonts Pane -->
-                <div class="tab-pane" id="fonts-pane">
-                    <div class="section-header"><span class="section-title">Font Combinations</span></div>
-                    <div class="fonts-grid" id="fontsGrid"></div>
-                </div>
-                
-                <!-- Photo Pane -->
-                <div class="tab-pane" id="photo-pane">
-                    <div class="section-header"><span class="section-title">Profile Photo</span></div>
-                    <div class="photo-grid" id="photoGrid"></div>
-                </div>
-                
-                <!-- Banner Pane -->
-                <div class="tab-pane" id="banner-pane">
-                    <div class="section-header"><span class="section-title">Header Banner</span></div>
-                    <div class="patterns-grid" id="patternsGrid"></div>
-                </div>
+                <div class="tab-pane" id="layouts-pane"><div class="section-header"><span class="section-title">Choose Layout</span></div><div class="layouts-grid" id="layoutsGrid"></div></div>
+                <div class="tab-pane" id="themes-pane"><div class="section-header"><span class="section-title">Color Themes</span></div><div class="themes-grid" id="themesGrid"></div></div>
+                <div class="tab-pane" id="fonts-pane"><div class="section-header"><span class="section-title">Font Combinations</span></div><div class="fonts-grid" id="fontsGrid"></div></div>
+                <div class="tab-pane" id="photo-pane"><div class="section-header"><span class="section-title">Profile Photo</span></div><div class="photo-grid" id="photoGrid"></div></div>
+                <div class="tab-pane" id="banner-pane"><div class="section-header"><span class="section-title">Header Banner</span></div><div class="patterns-grid" id="patternsGrid"></div></div>
             </div>
-            <div class="download-section">
-                <button class="download-btn" onclick="window.print()">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    Download PDF
-                </button>
-            </div>
+            <div class="download-section"><button class="download-btn" onclick="window.print()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Download PDF</button></div>
         </aside>
-        
         <main class="preview">
             <div class="cv-wrapper" id="cvWrapper">
                 <div class="cv-banner pattern-dots" id="cvBanner"></div>
@@ -337,7 +330,7 @@ User Research Methods</textarea></div>
                     </header>
                     <div class="cv-main">
                         <div class="cv-content">
-                            <section class="cv-section"><h2 class="cv-section-title">Professional Summary</h2><p class="cv-summary" id="cv-summary">8+ years of experience transforming the tech and marketing world through creativity and design. Specializing in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems.</p></section>
+                            <section class="cv-section"><h2 class="cv-section-title">Professional Summary</h2><p class="cv-summary" id="cv-summary"></p></section>
                             <section class="cv-section"><h2 class="cv-section-title">Work Experience</h2><div id="cv-experiences"></div></section>
                         </div>
                         <aside class="cv-sidebar">
@@ -356,28 +349,34 @@ User Research Methods</textarea></div>
     <!-- ATS Modal -->
     <div class="modal-overlay" id="atsModal">
         <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">🔍 ATS Optimization Check</div>
-                <button class="modal-close" onclick="closeATSModal()">×</button>
-            </div>
+            <div class="modal-header"><div class="modal-title">🔍 ATS Optimization Check</div><button class="modal-close" onclick="closeATSModal()">×</button></div>
             <div class="modal-body">
-                <div class="ats-input-section">
-                    <label>Job Description (optional - paste the job ad for better analysis)</label>
-                    <textarea id="ats-job-desc" placeholder="Paste the job description here to check keyword matching..."></textarea>
-                </div>
-                <div class="ats-input-section">
-                    <label>Company Name (optional)</label>
-                    <input type="text" class="editor-input" id="ats-company" placeholder="e.g., Google, Microsoft, Startup XYZ">
-                </div>
+                <div class="ats-input-section"><label>Job Description (optional)</label><textarea id="ats-job-desc" placeholder="Paste job description for keyword matching..."></textarea></div>
+                <div class="ats-input-section"><label>Company Name (optional)</label><input type="text" class="editor-input" id="ats-company" placeholder="e.g., Google, Microsoft"></div>
                 <div class="ats-results" id="atsResults" style="display:none;"></div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeATSModal()">Close</button>
-                <button class="btn btn-primary" onclick="runATSCheck()">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    Analyze CV
-                </button>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeATSModal()">Close</button><button class="btn btn-primary" onclick="runATSCheck()">Analyze CV</button></div>
+        </div>
+    </div>
+    
+    <!-- AI Fix Modal -->
+    <div class="modal-overlay" id="aiFixModal">
+        <div class="modal ai-fix-modal">
+            <div class="modal-header"><div class="modal-title"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24" style="color:#8b5cf6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>AI-Powered CV Optimizer</div><button class="modal-close" onclick="closeAIFixModal()">×</button></div>
+            <div class="modal-body" id="aiFixBody">
+                <div class="api-key-section">
+                    <h4>🔑 OpenAI API Key</h4>
+                    <p>Your API key is stored locally in your browser and only sent to OpenAI. It's never stored on any server.</p>
+                    <div class="api-key-input">
+                        <input type="password" id="apiKeyInput" placeholder="sk-..." value="">
+                        <button class="btn btn-secondary" onclick="saveAPIKey()">Save</button>
+                    </div>
+                    <div class="api-key-status" id="apiKeyStatus"></div>
+                </div>
+                <div class="ats-input-section"><label>Job Description (for context)</label><textarea id="ai-job-desc" placeholder="Paste job description for tailored suggestions..."></textarea></div>
+                <div id="aiFixContent"></div>
             </div>
+            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeAIFixModal()">Close</button><button class="btn btn-ai" onclick="startAIFix()" id="startAIBtn">Start AI Optimization</button></div>
         </div>
     </div>
 
@@ -387,34 +386,19 @@ User Research Methods</textarea></div>
         const themes = [
             { id: 'corporate', name: 'Corporate', primary: '#1a1a2e', accent: '#e94560' },
             { id: 'navy', name: 'Navy', primary: '#0a1628', accent: '#3b82f6' },
-            { id: 'charcoal', name: 'Charcoal', primary: '#1f2937', accent: '#f59e0b' },
             { id: 'forest', name: 'Forest', primary: '#14532d', accent: '#22c55e' },
             { id: 'ocean', name: 'Ocean', primary: '#0c4a6e', accent: '#38bdf8' },
             { id: 'sunset', name: 'Sunset', primary: '#431407', accent: '#fb923c' },
             { id: 'lavender', name: 'Lavender', primary: '#4a4063', accent: '#a78bfa' },
             { id: 'rose', name: 'Rose', primary: '#4a3f48', accent: '#f43f5e' },
             { id: 'cyberpunk', name: 'Cyberpunk', primary: '#0f0f1a', accent: '#ff00ff' },
-            { id: 'neon', name: 'Neon', primary: '#0a0a0a', accent: '#39ff14' },
             { id: 'nordic', name: 'Nordic', primary: '#2e3440', accent: '#88c0d0' },
             { id: 'gold', name: 'Gold', primary: '#1c1917', accent: '#eab308' },
             { id: 'mint', name: 'Mint', primary: '#1e3a3a', accent: '#5eead4' },
             { id: 'coral', name: 'Coral', primary: '#3d405b', accent: '#f4845f' },
             { id: 'slate', name: 'Slate', primary: '#334155', accent: '#6366f1' },
             { id: 'wine', name: 'Wine', primary: '#4a1d2e', accent: '#be185d' },
-            { id: 'mocha', name: 'Mocha', primary: '#3e3232', accent: '#a67b5b' },
-            { id: 'arctic', name: 'Arctic', primary: '#1e3a5f', accent: '#7dd3fc' },
-            { id: 'cherry', name: 'Cherry', primary: '#2b0f0f', accent: '#dc143c' },
-            { id: 'sage', name: 'Sage', primary: '#3f4f3f', accent: '#86efac' },
-            { id: 'plum', name: 'Plum', primary: '#3d2352', accent: '#c084fc' },
-            { id: 'ember', name: 'Ember', primary: '#292524', accent: '#ef4444' },
-            { id: 'electric', name: 'Electric', primary: '#0d0d1a', accent: '#00ffff' },
-            { id: 'bronze', name: 'Bronze', primary: '#292524', accent: '#cd7f32' },
-            { id: 'dracula', name: 'Dracula', primary: '#282a36', accent: '#ff79c6' },
-            { id: 'github', name: 'GitHub', primary: '#0d1117', accent: '#58a6ff' },
-            { id: 'stone', name: 'Stone', primary: '#292524', accent: '#a8a29e' },
-            { id: 'moss', name: 'Moss', primary: '#1a2e1a', accent: '#4ade80' },
-            { id: 'sand', name: 'Sand', primary: '#44403c', accent: '#d6d3d1' },
-            { id: 'silver', name: 'Silver', primary: '#27272a', accent: '#94a3b8' }
+            { id: 'mocha', name: 'Mocha', primary: '#3e3232', accent: '#a67b5b' }
         ];
         const fonts = [
             { id: 'classic', name: 'Classic', heading: "'Playfair Display', serif", body: "'Inter', sans-serif" },
@@ -423,24 +407,11 @@ User Research Methods</textarea></div>
             { id: 'geometric', name: 'Geometric', heading: "'Space Grotesk', sans-serif", body: "'Space Grotesk', sans-serif" },
             { id: 'tech', name: 'Tech', heading: "'JetBrains Mono', monospace", body: "'JetBrains Mono', monospace" },
             { id: 'startup', name: 'Startup', heading: "'Poppins', sans-serif", body: "'Poppins', sans-serif" },
-            { id: 'elegant', name: 'Elegant', heading: "'Lora', serif", body: "'Lora', serif" },
-            { id: 'corporate', name: 'Corporate', heading: "'Montserrat', sans-serif", body: "'Inter', sans-serif" },
             { id: 'smooth', name: 'Smooth', heading: "'DM Sans', sans-serif", body: "'DM Sans', sans-serif" },
             { id: 'contemporary', name: 'Contemporary', heading: "'Manrope', sans-serif", body: "'Manrope', sans-serif" }
         ];
-        const photos = [
-            { id: 'none', name: 'No Photo', src: null },
-            { id: 'color', name: 'Color', src: 'Assets/Dimitrios Gkorovelis (Colour).jpg' },
-            { id: 'bw', name: 'B&W', src: 'Assets/Dimitrios Gkorovelis (BW).jpg' }
-        ];
-        const patterns = [
-            { id: 'none', name: 'None' },
-            { id: 'dots', name: 'Dots' },
-            { id: 'lines', name: 'Lines' },
-            { id: 'grid', name: 'Grid' },
-            { id: 'gradient', name: 'Gradient' },
-            { id: 'accent', name: 'Accent' }
-        ];
+        const photos = [{ id: 'none', name: 'No Photo', src: null }, { id: 'color', name: 'Color', src: 'Assets/Dimitrios Gkorovelis (Colour).jpg' }, { id: 'bw', name: 'B&W', src: 'Assets/Dimitrios Gkorovelis (BW).jpg' }];
+        const patterns = [{ id: 'none', name: 'None' }, { id: 'dots', name: 'Dots' }, { id: 'lines', name: 'Lines' }, { id: 'grid', name: 'Grid' }, { id: 'gradient', name: 'Gradient' }, { id: 'accent', name: 'Accent' }];
         
         // State
         let state = {
@@ -448,56 +419,25 @@ User Research Methods</textarea></div>
             experiences: [
                 { title: 'Senior UX Designer', company: 'GUT Copenhagen (Globant)', location: 'Copenhagen', dates: 'Feb 2024 — Present', bullets: ['Lead UX design at the intersection of creativity and AI', 'Conduct UX audits and user testing sessions', 'Design scalable design systems'] },
                 { title: 'Freelance Product Designer', company: 'Self-Employed', location: 'Remote', dates: 'Oct 2016 — Present', bullets: ['End-to-end product design with accessibility focus', 'Wireframes, prototypes, animated interactions'] },
-                { title: 'Product Designer', company: 'Atos', location: 'Copenhagen', dates: 'Jan 2023 — Feb 2024', bullets: ['B2B traceability software design', 'Enterprise workflow interfaces'] },
+                { title: 'Product Designer', company: 'Atos', location: 'Copenhagen', dates: 'Jan 2023 — Feb 2024', bullets: ['B2B traceability software design'] },
                 { title: 'Visual & Interaction Designer', company: 'WhiteSpace', location: 'Athens', dates: 'Jul 2021 — Jan 2023', bullets: ['User flows and interactive prototypes'] }
             ],
             education: [{ degree: 'Graphic Design', school: 'TEI of Athens', dates: '2009 — 2017' }],
             languages: [{ name: 'Greek', level: 'Native' }, { name: 'English', level: 'Fluent' }]
         };
         
+        let atsIssues = [];
+        let currentIssueIndex = 0;
+        
         // Render functions
-        function renderLayouts() {
-            document.getElementById('layoutsGrid').innerHTML = layouts.map(l => `<div class="layout-card ${state.layout === l.id ? 'active' : ''}" onclick="selectLayout(${l.id})"></div>`).join('');
-        }
-        function renderThemes() {
-            document.getElementById('themesGrid').innerHTML = themes.map(t => `<div class="theme-card ${state.theme === t.id ? 'active' : ''}" onclick="selectTheme('${t.id}')" style="background: linear-gradient(135deg, ${t.primary} 50%, ${t.accent} 50%);"></div>`).join('');
-        }
-        function renderFonts() {
-            document.getElementById('fontsGrid').innerHTML = fonts.map(f => `<div class="font-card ${state.font === f.id ? 'active' : ''}" onclick="selectFont('${f.id}')"><div class="font-preview-heading" style="font-family: ${f.heading}">Dimitrios Gkorovelis</div><div class="font-preview-body" style="font-family: ${f.body}">Senior UX Designer with 8+ years</div><div class="font-name">${f.name}</div></div>`).join('');
-        }
-        function renderPhotos() {
-            document.getElementById('photoGrid').innerHTML = photos.map(p => p.id === 'none' ? `<div class="photo-card no-photo ${state.photo === p.id ? 'active' : ''}" onclick="selectPhoto('${p.id}')">No Photo</div>` : `<div class="photo-card ${state.photo === p.id ? 'active' : ''}" onclick="selectPhoto('${p.id}')"><img src="${p.src}" alt="${p.name}"></div>`).join('');
-        }
-        function renderPatterns() {
-            document.getElementById('patternsGrid').innerHTML = patterns.map(p => `<div class="pattern-card ${state.pattern === p.id ? 'active' : ''}" onclick="selectPattern('${p.id}')"><div class="cv-banner pattern-${p.id}" style="height:100%;"></div></div>`).join('');
-        }
-        function renderExperiencesEditor() {
-            document.getElementById('experiences-editor').innerHTML = state.experiences.map((exp, i) => `
-                <div class="exp-card">
-                    <div class="exp-card-header"><span class="exp-card-title">Experience ${i+1}</span><button class="exp-card-remove" onclick="removeExperience(${i})">×</button></div>
-                    <div class="editor-row"><div class="editor-section"><label class="editor-label">Title</label><input type="text" class="editor-input" value="${exp.title}" onchange="updateExp(${i}, 'title', this.value)"></div><div class="editor-section"><label class="editor-label">Company</label><input type="text" class="editor-input" value="${exp.company}" onchange="updateExp(${i}, 'company', this.value)"></div></div>
-                    <div class="editor-row"><div class="editor-section"><label class="editor-label">Location</label><input type="text" class="editor-input" value="${exp.location}" onchange="updateExp(${i}, 'location', this.value)"></div><div class="editor-section"><label class="editor-label">Dates</label><input type="text" class="editor-input" value="${exp.dates}" onchange="updateExp(${i}, 'dates', this.value)"></div></div>
-                    <div class="editor-section"><label class="editor-label">Bullet Points (one per line)</label><textarea class="editor-input editor-textarea" onchange="updateExp(${i}, 'bullets', this.value.split('\\n').filter(b=>b.trim()))">${exp.bullets.join('\n')}</textarea></div>
-                </div>
-            `).join('');
-        }
-        function renderEducationEditor() {
-            document.getElementById('education-editor').innerHTML = state.education.map((edu, i) => `
-                <div class="exp-card">
-                    <div class="exp-card-header"><span class="exp-card-title">Education ${i+1}</span><button class="exp-card-remove" onclick="removeEducation(${i})">×</button></div>
-                    <div class="editor-section"><label class="editor-label">Degree/Field</label><input type="text" class="editor-input" value="${edu.degree}" onchange="updateEdu(${i}, 'degree', this.value)"></div>
-                    <div class="editor-row"><div class="editor-section"><label class="editor-label">School</label><input type="text" class="editor-input" value="${edu.school}" onchange="updateEdu(${i}, 'school', this.value)"></div><div class="editor-section"><label class="editor-label">Dates</label><input type="text" class="editor-input" value="${edu.dates}" onchange="updateEdu(${i}, 'dates', this.value)"></div></div>
-                </div>
-            `).join('');
-        }
-        function renderLanguagesEditor() {
-            document.getElementById('languages-editor').innerHTML = state.languages.map((lang, i) => `
-                <div class="exp-card">
-                    <div class="exp-card-header"><span class="exp-card-title">Language ${i+1}</span><button class="exp-card-remove" onclick="removeLanguage(${i})">×</button></div>
-                    <div class="editor-row"><div class="editor-section"><label class="editor-label">Language</label><input type="text" class="editor-input" value="${lang.name}" onchange="updateLang(${i}, 'name', this.value)"></div><div class="editor-section"><label class="editor-label">Level</label><input type="text" class="editor-input" value="${lang.level}" onchange="updateLang(${i}, 'level', this.value)"></div></div>
-                </div>
-            `).join('');
-        }
+        function renderLayouts() { document.getElementById('layoutsGrid').innerHTML = layouts.map(l => `<div class="layout-card ${state.layout === l.id ? 'active' : ''}" onclick="selectLayout(${l.id})"></div>`).join(''); }
+        function renderThemes() { document.getElementById('themesGrid').innerHTML = themes.map(t => `<div class="theme-card ${state.theme === t.id ? 'active' : ''}" onclick="selectTheme('${t.id}')" style="background: linear-gradient(135deg, ${t.primary} 50%, ${t.accent} 50%);"></div>`).join(''); }
+        function renderFonts() { document.getElementById('fontsGrid').innerHTML = fonts.map(f => `<div class="font-card ${state.font === f.id ? 'active' : ''}" onclick="selectFont('${f.id}')"><div class="font-preview-heading" style="font-family: ${f.heading}">Dimitrios Gkorovelis</div><div class="font-preview-body" style="font-family: ${f.body}">Senior UX Designer</div><div class="font-name">${f.name}</div></div>`).join(''); }
+        function renderPhotos() { document.getElementById('photoGrid').innerHTML = photos.map(p => p.id === 'none' ? `<div class="photo-card no-photo ${state.photo === p.id ? 'active' : ''}" onclick="selectPhoto('${p.id}')">No Photo</div>` : `<div class="photo-card ${state.photo === p.id ? 'active' : ''}" onclick="selectPhoto('${p.id}')"><img src="${p.src}"></div>`).join(''); }
+        function renderPatterns() { document.getElementById('patternsGrid').innerHTML = patterns.map(p => `<div class="pattern-card ${state.pattern === p.id ? 'active' : ''}" onclick="selectPattern('${p.id}')"><div class="cv-banner pattern-${p.id}" style="height:100%;"></div></div>`).join(''); }
+        function renderExperiencesEditor() { document.getElementById('experiences-editor').innerHTML = state.experiences.map((exp, i) => `<div class="exp-card"><div class="exp-card-header"><span class="exp-card-title">Experience ${i+1}</span><button class="exp-card-remove" onclick="removeExperience(${i})">×</button></div><div class="editor-row"><div class="editor-section"><label class="editor-label">Title</label><input type="text" class="editor-input" value="${exp.title}" onchange="updateExp(${i}, 'title', this.value)"></div><div class="editor-section"><label class="editor-label">Company</label><input type="text" class="editor-input" value="${exp.company}" onchange="updateExp(${i}, 'company', this.value)"></div></div><div class="editor-row"><div class="editor-section"><label class="editor-label">Location</label><input type="text" class="editor-input" value="${exp.location}" onchange="updateExp(${i}, 'location', this.value)"></div><div class="editor-section"><label class="editor-label">Dates</label><input type="text" class="editor-input" value="${exp.dates}" onchange="updateExp(${i}, 'dates', this.value)"></div></div><div class="editor-section"><label class="editor-label">Bullet Points (one per line)</label><textarea class="editor-input editor-textarea" onchange="updateExp(${i}, 'bullets', this.value.split('\\n').filter(b=>b.trim()))">${exp.bullets.join('\n')}</textarea></div></div>`).join(''); }
+        function renderEducationEditor() { document.getElementById('education-editor').innerHTML = state.education.map((edu, i) => `<div class="exp-card"><div class="exp-card-header"><span class="exp-card-title">Education ${i+1}</span><button class="exp-card-remove" onclick="removeEducation(${i})">×</button></div><div class="editor-section"><label class="editor-label">Degree</label><input type="text" class="editor-input" value="${edu.degree}" onchange="updateEdu(${i}, 'degree', this.value)"></div><div class="editor-row"><div class="editor-section"><label class="editor-label">School</label><input type="text" class="editor-input" value="${edu.school}" onchange="updateEdu(${i}, 'school', this.value)"></div><div class="editor-section"><label class="editor-label">Dates</label><input type="text" class="editor-input" value="${edu.dates}" onchange="updateEdu(${i}, 'dates', this.value)"></div></div></div>`).join(''); }
+        function renderLanguagesEditor() { document.getElementById('languages-editor').innerHTML = state.languages.map((lang, i) => `<div class="exp-card"><div class="exp-card-header"><span class="exp-card-title">Language ${i+1}</span><button class="exp-card-remove" onclick="removeLanguage(${i})">×</button></div><div class="editor-row"><div class="editor-section"><label class="editor-label">Language</label><input type="text" class="editor-input" value="${lang.name}" onchange="updateLang(${i}, 'name', this.value)"></div><div class="editor-section"><label class="editor-label">Level</label><input type="text" class="editor-input" value="${lang.level}" onchange="updateLang(${i}, 'level', this.value)"></div></div></div>`).join(''); }
         
         // Selection functions
         function selectLayout(id) { state.layout = id; renderLayouts(); document.getElementById('cvWrapper').className = 'cv-wrapper layout-' + id; }
@@ -506,7 +446,7 @@ User Research Methods</textarea></div>
         function selectPhoto(id) { state.photo = id; const p = photos.find(x => x.id === id); renderPhotos(); const el = document.getElementById('cvPhoto'); if (id === 'none') { el.classList.remove('visible'); } else { el.classList.add('visible'); document.getElementById('cvPhotoImg').src = p.src; } }
         function selectPattern(id) { state.pattern = id; renderPatterns(); document.getElementById('cvBanner').className = 'cv-banner pattern-' + id; }
         
-        // CRUD functions
+        // CRUD
         function addExperience() { state.experiences.push({ title: '', company: '', location: '', dates: '', bullets: [''] }); renderExperiencesEditor(); updateCV(); }
         function removeExperience(i) { state.experiences.splice(i, 1); renderExperiencesEditor(); updateCV(); }
         function updateExp(i, key, val) { state.experiences[i][key] = val; updateCV(); }
@@ -516,67 +456,34 @@ User Research Methods</textarea></div>
         function addLanguage() { state.languages.push({ name: '', level: '' }); renderLanguagesEditor(); updateCV(); }
         function removeLanguage(i) { state.languages.splice(i, 1); renderLanguagesEditor(); updateCV(); }
         function updateLang(i, key, val) { state.languages[i][key] = val; updateCV(); }
-        
-        function randomize() {
-            selectLayout(layouts[Math.floor(Math.random() * layouts.length)].id);
-            selectTheme(themes[Math.floor(Math.random() * themes.length)].id);
-            selectFont(fonts[Math.floor(Math.random() * fonts.length)].id);
-            selectPhoto(photos[Math.floor(Math.random() * photos.length)].id);
-            selectPattern(patterns[Math.floor(Math.random() * patterns.length)].id);
-        }
+        function randomize() { selectLayout(layouts[Math.floor(Math.random() * layouts.length)].id); selectTheme(themes[Math.floor(Math.random() * themes.length)].id); selectFont(fonts[Math.floor(Math.random() * fonts.length)].id); selectPhoto(photos[Math.floor(Math.random() * photos.length)].id); selectPattern(patterns[Math.floor(Math.random() * patterns.length)].id); }
         
         function updateCV() {
             document.getElementById('cv-name').textContent = document.getElementById('edit-name').value;
             document.getElementById('cv-title').textContent = document.getElementById('edit-title').value;
             document.getElementById('cv-tagline').textContent = document.getElementById('edit-tagline').value;
             document.getElementById('cv-summary').textContent = document.getElementById('edit-summary').value;
-            
             const email = document.getElementById('edit-email').value;
             const emailEl = document.getElementById('cv-email');
-            emailEl.textContent = email;
-            emailEl.href = 'mailto:' + email;
-            
+            emailEl.textContent = email; emailEl.href = 'mailto:' + email;
             document.getElementById('cv-phone').textContent = document.getElementById('edit-phone').value;
             document.getElementById('cv-location').textContent = document.getElementById('edit-location').value;
-            
             const portfolio = document.getElementById('edit-portfolio').value;
             const portfolioDisplay = portfolio.replace(/^https?:\/\//, '');
             document.getElementById('cv-portfolio-link').textContent = portfolioDisplay;
             document.getElementById('cv-portfolio-link').href = portfolio;
             document.getElementById('cv-portfolio').textContent = portfolioDisplay;
             document.getElementById('cv-portfolio').href = portfolio;
-            
             const linkedin = document.getElementById('edit-linkedin').value;
-            const linkedinDisplay = linkedin.replace(/^https?:\/\//, '');
-            document.getElementById('cv-linkedin').textContent = linkedinDisplay;
+            document.getElementById('cv-linkedin').textContent = linkedin.replace(/^https?:\/\//, '');
             document.getElementById('cv-linkedin').href = linkedin;
-            
-            // Experiences
-            document.getElementById('cv-experiences').innerHTML = state.experiences.map(exp => `
-                <div class="cv-exp">
-                    <div class="cv-exp-header"><span class="cv-exp-title">${exp.title}</span><span class="cv-exp-date">${exp.dates}</span></div>
-                    <div class="cv-exp-company">${exp.company} <span class="cv-exp-location">· ${exp.location}</span></div>
-                    <div class="cv-exp-desc"><ul>${exp.bullets.map(b => `<li>${b}</li>`).join('')}</ul></div>
-                </div>
-            `).join('');
-            
-            // Education
-            document.getElementById('cv-education').innerHTML = state.education.map(edu => `
-                <div class="cv-edu"><div class="cv-edu-degree">${edu.degree}</div><div class="cv-edu-school">${edu.school}</div><div class="cv-edu-date">${edu.dates}</div></div>
-            `).join('');
-            
-            // Languages
-            document.getElementById('cv-languages').innerHTML = state.languages.map(lang => `
-                <div class="cv-lang"><span>${lang.name}</span><span class="cv-lang-level">${lang.level}</span></div>
-            `).join('');
-            
-            // Skills
+            document.getElementById('cv-experiences').innerHTML = state.experiences.map(exp => `<div class="cv-exp"><div class="cv-exp-header"><span class="cv-exp-title">${exp.title}</span><span class="cv-exp-date">${exp.dates}</span></div><div class="cv-exp-company">${exp.company} <span class="cv-exp-location">· ${exp.location}</span></div><div class="cv-exp-desc"><ul>${exp.bullets.map(b => `<li>${b}</li>`).join('')}</ul></div></div>`).join('');
+            document.getElementById('cv-education').innerHTML = state.education.map(edu => `<div class="cv-edu"><div class="cv-edu-degree">${edu.degree}</div><div class="cv-edu-school">${edu.school}</div><div class="cv-edu-date">${edu.dates}</div></div>`).join('');
+            document.getElementById('cv-languages').innerHTML = state.languages.map(lang => `<div class="cv-lang"><span>${lang.name}</span><span class="cv-lang-level">${lang.level}</span></div>`).join('');
             const primarySkills = document.getElementById('edit-skills-primary').value.split(',').map(s => s.trim()).filter(s => s);
             const allSkills = document.getElementById('edit-skills').value.split(',').map(s => s.trim()).filter(s => s);
             document.getElementById('cv-skills-primary').innerHTML = primarySkills.map(s => `<span class="cv-skill primary">${s}</span>`).join('');
             document.getElementById('cv-skills-all').innerHTML = allSkills.map(s => `<span class="cv-skill">${s}</span>`).join('');
-            
-            // Certs
             const certs = document.getElementById('edit-certs').value.split('\n').map(c => c.trim()).filter(c => c);
             document.getElementById('cv-certs').innerHTML = certs.map(c => `<div class="cv-cert">${c}</div>`).join('');
         }
@@ -587,89 +494,186 @@ User Research Methods</textarea></div>
         
         function runATSCheck() {
             const jobDesc = document.getElementById('ats-job-desc').value.toLowerCase();
-            const company = document.getElementById('ats-company').value;
             const issues = [];
             let score = 100;
-            
             const name = document.getElementById('edit-name').value;
-            const title = document.getElementById('edit-title').value;
             const summary = document.getElementById('edit-summary').value;
             const skills = document.getElementById('edit-skills-primary').value + ',' + document.getElementById('edit-skills').value;
             const email = document.getElementById('edit-email').value;
             const phone = document.getElementById('edit-phone').value;
             const linkedin = document.getElementById('edit-linkedin').value;
-            
-            // Basic checks
-            if (!name.trim()) { issues.push({ type: 'error', title: 'Missing Name', desc: 'Your CV must include your full name.', action: 'Go to Content tab and add your name', tab: 'content' }); score -= 20; }
-            if (!email.trim()) { issues.push({ type: 'error', title: 'Missing Email', desc: 'Contact email is required for recruiters to reach you.', action: 'Add your email address', tab: 'content' }); score -= 15; }
-            if (!phone.trim()) { issues.push({ type: 'warning', title: 'Missing Phone', desc: 'Adding a phone number increases callback rates.', action: 'Add your phone number', tab: 'content' }); score -= 5; }
-            if (!linkedin.includes('linkedin')) { issues.push({ type: 'warning', title: 'Missing LinkedIn', desc: 'Most recruiters check LinkedIn profiles.', action: 'Add your LinkedIn URL', tab: 'content' }); score -= 5; }
-            if (summary.length < 100) { issues.push({ type: 'warning', title: 'Short Summary', desc: 'Your summary should be 2-3 sentences highlighting key achievements.', action: 'Expand your professional summary', tab: 'content' }); score -= 10; }
-            if (state.experiences.length < 2) { issues.push({ type: 'warning', title: 'Limited Experience', desc: 'Add more work experience entries to show career progression.', action: 'Add more experience entries', tab: 'content' }); score -= 10; }
-            if (skills.split(',').length < 5) { issues.push({ type: 'warning', title: 'Few Skills', desc: 'Add more relevant skills to pass ATS keyword filters.', action: 'Add more skills', tab: 'content' }); score -= 10; }
-            
-            // Check for action verbs
-            const actionVerbs = ['led', 'managed', 'developed', 'created', 'designed', 'implemented', 'improved', 'increased', 'reduced', 'achieved'];
             const expText = state.experiences.map(e => e.bullets.join(' ')).join(' ').toLowerCase();
-            const hasActionVerbs = actionVerbs.some(v => expText.includes(v));
-            if (!hasActionVerbs) { issues.push({ type: 'warning', title: 'Missing Action Verbs', desc: 'Use action verbs like "Led", "Developed", "Achieved" to start bullet points.', action: 'Edit experience bullet points', tab: 'content' }); score -= 10; }
             
-            // Check for metrics/numbers
-            const hasNumbers = /\d+%|\d+ (users|clients|projects|team|million|thousand)/i.test(expText);
-            if (!hasNumbers) { issues.push({ type: 'warning', title: 'No Quantified Achievements', desc: 'Add metrics like "Increased sales by 25%" or "Managed team of 5".', action: 'Add numbers to your achievements', tab: 'content' }); score -= 10; }
+            if (!name.trim()) { issues.push({ type: 'error', title: 'Missing Name', desc: 'Add your full name.', field: 'name', prompt: 'name' }); score -= 20; }
+            if (!email.trim()) { issues.push({ type: 'error', title: 'Missing Email', desc: 'Add contact email.', field: 'email', prompt: 'email' }); score -= 15; }
+            if (!phone.trim()) { issues.push({ type: 'warning', title: 'Missing Phone', desc: 'Add phone number.', field: 'phone', prompt: 'phone' }); score -= 5; }
+            if (!linkedin.includes('linkedin')) { issues.push({ type: 'warning', title: 'Missing LinkedIn', desc: 'Add LinkedIn URL.', field: 'linkedin', prompt: 'linkedin' }); score -= 5; }
+            if (summary.length < 100) { issues.push({ type: 'warning', title: 'Short Summary', desc: 'Expand your summary to 2-3 sentences.', field: 'summary', prompt: 'summary' }); score -= 10; }
+            if (state.experiences.length < 2) { issues.push({ type: 'warning', title: 'Limited Experience', desc: 'Add more work entries.', field: 'experiences', prompt: 'experience' }); score -= 10; }
+            if (skills.split(',').length < 5) { issues.push({ type: 'warning', title: 'Few Skills', desc: 'Add more relevant skills.', field: 'skills', prompt: 'skills' }); score -= 10; }
             
-            // Job description matching
+            const actionVerbs = ['led', 'managed', 'developed', 'created', 'designed', 'implemented', 'improved', 'increased', 'reduced', 'achieved'];
+            if (!actionVerbs.some(v => expText.includes(v))) { issues.push({ type: 'warning', title: 'Missing Action Verbs', desc: 'Use verbs like Led, Developed, Achieved.', field: 'experience_bullets', prompt: 'action_verbs' }); score -= 10; }
+            if (!/\d+%|\d+ (users|clients|projects|team)/i.test(expText)) { issues.push({ type: 'warning', title: 'No Metrics', desc: 'Add numbers like "25%" or "team of 5".', field: 'experience_bullets', prompt: 'metrics' }); score -= 10; }
+            
             if (jobDesc.length > 50) {
-                const cvText = (name + ' ' + title + ' ' + summary + ' ' + skills + ' ' + expText).toLowerCase();
-                const jobWords = jobDesc.match(/\b[a-z]{4,}\b/g) || [];
-                const importantWords = [...new Set(jobWords)].filter(w => !['and', 'the', 'with', 'for', 'that', 'this', 'from', 'have', 'will', 'your', 'about'].includes(w));
-                const matchedWords = importantWords.filter(w => cvText.includes(w));
-                const matchRate = matchedWords.length / importantWords.length;
-                
-                if (matchRate < 0.3) {
-                    issues.push({ type: 'error', title: 'Low Keyword Match', desc: `Only ${Math.round(matchRate * 100)}% of job description keywords found in your CV. ATS may filter you out.`, action: 'Add more relevant keywords from the job description', tab: 'content' });
-                    score -= 20;
-                } else if (matchRate < 0.5) {
-                    issues.push({ type: 'warning', title: 'Moderate Keyword Match', desc: `${Math.round(matchRate * 100)}% keyword match. Consider adding more terms from the job description.`, action: 'Review and add missing keywords', tab: 'content' });
-                    score -= 10;
-                } else {
-                    issues.push({ type: 'success', title: 'Good Keyword Match', desc: `${Math.round(matchRate * 100)}% of job keywords found. Your CV is well-targeted.`, action: null });
-                }
-                
-                // Find missing important keywords
-                const missingKeywords = importantWords.filter(w => !cvText.includes(w)).slice(0, 10);
-                if (missingKeywords.length > 0) {
-                    issues.push({ type: 'warning', title: 'Missing Keywords', desc: `Consider adding: ${missingKeywords.join(', ')}`, action: 'Add these keywords naturally to your CV', tab: 'content' });
-                }
+                const cvText = (name + ' ' + summary + ' ' + skills + ' ' + expText).toLowerCase();
+                const jobWords = [...new Set((jobDesc.match(/\b[a-z]{4,}\b/g) || []).filter(w => !['and', 'the', 'with', 'for', 'that', 'this', 'from', 'have', 'will', 'your', 'about'].includes(w)))];
+                const matched = jobWords.filter(w => cvText.includes(w));
+                const rate = matched.length / jobWords.length;
+                if (rate < 0.3) { issues.push({ type: 'error', title: 'Low Keyword Match', desc: `Only ${Math.round(rate * 100)}% keywords found.`, field: 'keywords', prompt: 'keywords' }); score -= 20; }
+                else if (rate < 0.5) { issues.push({ type: 'warning', title: 'Moderate Keywords', desc: `${Math.round(rate * 100)}% match. Add more.`, field: 'keywords', prompt: 'keywords' }); score -= 10; }
+                const missing = jobWords.filter(w => !cvText.includes(w)).slice(0, 8);
+                if (missing.length) issues.push({ type: 'warning', title: 'Missing Keywords', desc: `Consider: ${missing.join(', ')}`, field: 'skills', prompt: 'missing_keywords', keywords: missing });
             }
             
-            // Success checks
-            if (state.experiences.some(e => e.bullets.length >= 3)) { issues.push({ type: 'success', title: 'Detailed Experience', desc: 'Your experience entries have good detail.', action: null }); }
-            if (email && phone && linkedin) { issues.push({ type: 'success', title: 'Complete Contact Info', desc: 'All contact information is present.', action: null }); }
-            
             score = Math.max(0, Math.min(100, score));
+            atsIssues = issues.filter(i => i.type !== 'success');
             
-            // Render results
-            const resultsHtml = `
-                <div class="ats-score">
-                    <div class="ats-score-value" style="color: ${score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#e74c3c'}">${score}</div>
-                    <div class="ats-score-label">ATS Optimization Score</div>
-                </div>
-                ${issues.map(issue => `
-                    <div class="ats-issue ${issue.type === 'warning' ? 'warning' : issue.type === 'success' ? 'success' : ''}">
-                        <div class="ats-issue-header">
-                            <div class="ats-issue-title">${issue.title}</div>
-                            <span class="ats-issue-type">${issue.type === 'error' ? 'Error' : issue.type === 'warning' ? 'Warning' : 'Good'}</span>
-                        </div>
-                        <div class="ats-issue-desc">${issue.desc}</div>
-                        ${issue.action ? `<button class="ats-issue-action" onclick="closeATSModal(); switchToTab('${issue.tab}')">${issue.action}</button>` : ''}
-                    </div>
-                `).join('')}
+            document.getElementById('atsResults').innerHTML = `
+                <div class="ats-score"><div class="ats-score-value" style="color: ${score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#e74c3c'}">${score}</div><div class="ats-score-label">ATS Score</div></div>
+                ${issues.map(issue => `<div class="ats-issue ${issue.type}"><div class="ats-issue-header"><div class="ats-issue-title">${issue.title}</div><span class="ats-issue-type">${issue.type === 'error' ? 'Error' : issue.type === 'warning' ? 'Warning' : 'Good'}</span></div><div class="ats-issue-desc">${issue.desc}</div></div>`).join('')}
+                ${atsIssues.length > 0 ? `<button class="btn btn-ai" onclick="closeATSModal(); openAIFixModal()" style="width:100%;margin-top:16px;padding:12px;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Fix All Issues with AI</button>` : ''}
             `;
-            
-            document.getElementById('atsResults').innerHTML = resultsHtml;
             document.getElementById('atsResults').style.display = 'block';
         }
+        
+        // AI Fix
+        function openAIFixModal() {
+            document.getElementById('aiFixModal').classList.add('active');
+            const key = localStorage.getItem('openai_api_key');
+            if (key) {
+                document.getElementById('apiKeyInput').value = key;
+                document.getElementById('apiKeyStatus').innerHTML = '<span class="api-key-status valid">✓ API key saved</span>';
+            }
+            if (atsIssues.length === 0) runATSCheck();
+            currentIssueIndex = 0;
+            document.getElementById('aiFixContent').innerHTML = '';
+        }
+        function closeAIFixModal() { document.getElementById('aiFixModal').classList.remove('active'); }
+        
+        function saveAPIKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (key.startsWith('sk-')) {
+                localStorage.setItem('openai_api_key', key);
+                document.getElementById('apiKeyStatus').innerHTML = '<span class="api-key-status valid">✓ API key saved securely in browser</span>';
+            } else {
+                document.getElementById('apiKeyStatus').innerHTML = '<span class="api-key-status invalid">✗ Invalid key format (should start with sk-)</span>';
+            }
+        }
+        
+        async function startAIFix() {
+            const key = localStorage.getItem('openai_api_key');
+            if (!key) { alert('Please save your OpenAI API key first.'); return; }
+            if (atsIssues.length === 0) { alert('No issues to fix!'); return; }
+            currentIssueIndex = 0;
+            await showCurrentIssue();
+        }
+        
+        async function showCurrentIssue() {
+            if (currentIssueIndex >= atsIssues.length) {
+                document.getElementById('aiFixContent').innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">🎉</div><h3>All Issues Fixed!</h3><p style="color:var(--ui-text-muted);margin-top:8px;">Your CV is now ATS-optimized.</p><button class="btn btn-primary" onclick="closeAIFixModal()" style="margin-top:20px;">Done</button></div>`;
+                return;
+            }
+            
+            const issue = atsIssues[currentIssueIndex];
+            const progressHtml = atsIssues.map((_, i) => `<div class="ai-progress-step ${i < currentIssueIndex ? 'done' : i === currentIssueIndex ? 'active' : ''}">${i + 1}</div>${i < atsIssues.length - 1 ? `<div class="ai-progress-line ${i < currentIssueIndex ? 'done' : ''}"></div>` : ''}`).join('');
+            
+            document.getElementById('aiFixContent').innerHTML = `
+                <div class="ai-progress">${progressHtml}</div>
+                <div class="ai-current-issue"><h4>${issue.title}</h4><p>${issue.desc}</p></div>
+                <div class="ai-loading" id="aiLoading"><div class="ai-loading-spinner"></div><p>AI is generating a suggestion...</p></div>
+                <div id="aiSuggestionArea" style="display:none;"></div>
+            `;
+            
+            await generateAISuggestion(issue);
+        }
+        
+        async function generateAISuggestion(issue) {
+            const key = localStorage.getItem('openai_api_key');
+            const jobDesc = document.getElementById('ai-job-desc').value;
+            const currentData = {
+                name: document.getElementById('edit-name').value,
+                title: document.getElementById('edit-title').value,
+                summary: document.getElementById('edit-summary').value,
+                skills: document.getElementById('edit-skills-primary').value + ', ' + document.getElementById('edit-skills').value,
+                experiences: state.experiences
+            };
+            
+            const prompts = {
+                summary: `Improve this CV summary for ATS optimization. Current: "${currentData.summary}". Make it 2-3 compelling sentences with keywords. Job context: ${jobDesc || 'General UX/Design role'}. Return ONLY the improved summary text.`,
+                skills: `Suggest 5-8 additional relevant skills for this CV. Current skills: ${currentData.skills}. Job context: ${jobDesc || 'UX Design role'}. Return ONLY comma-separated skills.`,
+                action_verbs: `Improve these CV bullet points with strong action verbs and metrics: ${currentData.experiences[0]?.bullets.join('; ')}. Return ONLY the improved bullet points, one per line.`,
+                metrics: `Add quantifiable metrics to these achievements: ${currentData.experiences[0]?.bullets.join('; ')}. Examples: percentages, team sizes, project counts. Return ONLY improved bullets, one per line.`,
+                missing_keywords: `Naturally incorporate these keywords into a professional summary: ${issue.keywords?.join(', ')}. Current summary: "${currentData.summary}". Return ONLY the improved summary.`,
+                keywords: `Suggest how to incorporate relevant keywords from this job description into the CV. Job: ${jobDesc}. Current summary: ${currentData.summary}. Return improved summary with keywords.`
+            };
+            
+            const prompt = prompts[issue.prompt] || `Improve this CV section for ATS: ${issue.desc}. Current data: ${JSON.stringify(currentData)}. Return ONLY the improved content.`;
+            
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: 'You are an expert CV writer and ATS optimization specialist. Provide concise, professional improvements. Return ONLY the improved content, no explanations.' },
+                            { role: 'user', content: prompt }
+                        ],
+                        max_tokens: 500,
+                        temperature: 0.7
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.error) throw new Error(data.error.message);
+                
+                const suggestion = data.choices[0].message.content.trim();
+                
+                document.getElementById('aiLoading').style.display = 'none';
+                document.getElementById('aiSuggestionArea').style.display = 'block';
+                document.getElementById('aiSuggestionArea').innerHTML = `
+                    <div class="ai-suggestion">
+                        <div class="ai-suggestion-label"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> AI Suggestion</div>
+                        <div class="ai-suggestion-content" id="suggestionText">${suggestion}</div>
+                    </div>
+                    <div class="ai-actions">
+                        <button class="btn btn-primary" onclick="applySuggestion('${issue.field}')">✓ Apply</button>
+                        <button class="btn btn-secondary" onclick="skipIssue()">Skip</button>
+                        <button class="btn btn-secondary" onclick="regenerateSuggestion()">🔄 Regenerate</button>
+                    </div>
+                `;
+            } catch (err) {
+                document.getElementById('aiLoading').innerHTML = `<p style="color:#e74c3c;">Error: ${err.message}</p><button class="btn btn-secondary" onclick="showCurrentIssue()" style="margin-top:12px;">Retry</button>`;
+            }
+        }
+        
+        function applySuggestion(field) {
+            const suggestion = document.getElementById('suggestionText').textContent;
+            switch (field) {
+                case 'summary': document.getElementById('edit-summary').value = suggestion; break;
+                case 'skills': 
+                    const current = document.getElementById('edit-skills').value;
+                    document.getElementById('edit-skills').value = current + (current ? ', ' : '') + suggestion;
+                    break;
+                case 'experience_bullets':
+                case 'keywords':
+                    if (suggestion.includes('\n')) {
+                        state.experiences[0].bullets = suggestion.split('\n').filter(b => b.trim());
+                        renderExperiencesEditor();
+                    } else {
+                        document.getElementById('edit-summary').value = suggestion;
+                    }
+                    break;
+            }
+            updateCV();
+            currentIssueIndex++;
+            showCurrentIssue();
+        }
+        
+        function skipIssue() { currentIssueIndex++; showCurrentIssue(); }
+        function regenerateSuggestion() { showCurrentIssue(); }
         
         function switchToTab(tabId) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -678,17 +682,12 @@ User Research Methods</textarea></div>
             document.getElementById(tabId + '-pane').classList.add('active');
         }
         
-        // Tab switching
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => switchToTab(tab.dataset.tab));
-        });
+        document.querySelectorAll('.tab').forEach(tab => { tab.addEventListener('click', () => switchToTab(tab.dataset.tab)); });
         
-        // Initialize
+        // Init
         renderLayouts(); renderThemes(); renderFonts(); renderPhotos(); renderPatterns();
         renderExperiencesEditor(); renderEducationEditor(); renderLanguagesEditor();
-        selectPhoto('color');
-        updateCV();
+        selectPhoto('color'); updateCV();
     </script>
 </body>
 </html>
-
