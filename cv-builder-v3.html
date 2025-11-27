@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Studio — Design Your Perfect Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Crimson+Pro:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Lora:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ui-bg: #f5f0e8; --ui-surface: #fff; --ui-border: #e8e0d5;
+            --ui-text: #1a1a1a; --ui-text-muted: #6b6560; --ui-accent: #c45c3e;
+            --cv-primary: #1a1a2e; --cv-accent: #e94560; --cv-text: #2d3436;
+            --cv-text-light: #636e72; --cv-bg: #fff; --cv-bg-subtle: #f8f9fa;
+            --cv-border: #e9ecef; --cv-font-heading: 'Playfair Display', serif;
+            --cv-font-body: 'Inter', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--ui-bg); color: var(--ui-text); min-height: 100vh; overflow: hidden; }
+        .app { display: grid; grid-template-columns: 460px 1fr; height: 100vh; }
+        
+        /* Panel */
+        .panel { background: var(--ui-surface); border-right: 1px solid var(--ui-border); display: flex; flex-direction: column; height: 100vh; }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--ui-border); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 36px; height: 36px; background: var(--ui-accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; }
+        .logo-text { font-weight: 700; font-size: 18px; }
+        .logo-text span { color: var(--ui-accent); }
+        .header-buttons { display: flex; gap: 8px; }
+        .btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border: none; border-radius: 6px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+        .btn-primary { background: linear-gradient(135deg, var(--ui-accent), #e07a5f); color: white; }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(196,92,62,0.3); }
+        .btn-secondary { background: var(--ui-bg); color: var(--ui-text); border: 1px solid var(--ui-border); }
+        .btn-secondary:hover { background: var(--ui-border); }
+        .btn svg { width: 14px; height: 14px; }
+        
+        /* Tabs */
+        .tabs { display: flex; border-bottom: 1px solid var(--ui-border); padding: 0 12px; overflow-x: auto; }
+        .tab { padding: 12px 12px; font-size: 11px; font-weight: 500; color: var(--ui-text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap; }
+        .tab:hover { color: var(--ui-text); }
+        .tab.active { color: var(--ui-accent); border-bottom-color: var(--ui-accent); }
+        
+        /* Tab Content */
+        .tab-content { flex: 1; overflow-y: auto; padding: 16px; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; margin-top: 16px; }
+        .section-header:first-child { margin-top: 0; }
+        .section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--ui-text-muted); }
+        .section-count { font-size: 9px; color: var(--ui-text-muted); background: var(--ui-bg); padding: 2px 6px; border-radius: 10px; }
+        
+        /* Grids */
+        .layouts-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+        .layout-card { aspect-ratio: 0.72; background: var(--ui-bg); border: 2px solid var(--ui-border); border-radius: 4px; cursor: pointer; transition: all 0.15s; position: relative; }
+        .layout-card:hover, .layout-card.active { border-color: var(--ui-accent); }
+        .layout-card.active::after { content: '✓'; position: absolute; top: 2px; right: 2px; width: 12px; height: 12px; background: var(--ui-accent); color: white; border-radius: 50%; font-size: 7px; display: flex; align-items: center; justify-content: center; }
+        .themes-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
+        .theme-card { aspect-ratio: 1; border-radius: 6px; cursor: pointer; transition: all 0.15s; border: 2px solid transparent; position: relative; }
+        .theme-card:hover { transform: scale(1.1); z-index: 1; }
+        .theme-card.active { border-color: var(--ui-text); box-shadow: 0 0 0 2px var(--ui-accent); }
+        .fonts-grid { display: grid; gap: 6px; }
+        .font-card { background: var(--ui-bg); border: 2px solid var(--ui-border); border-radius: 6px; padding: 10px 12px; cursor: pointer; transition: all 0.15s; }
+        .font-card:hover, .font-card.active { border-color: var(--ui-accent); }
+        .font-preview-heading { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .font-preview-body { font-size: 10px; color: var(--ui-text-muted); }
+        .font-name { font-size: 8px; color: var(--ui-accent); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .photo-card { aspect-ratio: 1; border: 2px solid var(--ui-border); border-radius: 8px; cursor: pointer; overflow: hidden; position: relative; }
+        .photo-card:hover, .photo-card.active { border-color: var(--ui-accent); }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-card.no-photo { display: flex; align-items: center; justify-content: center; background: var(--ui-bg); font-size: 10px; color: var(--ui-text-muted); }
+        .patterns-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+        .pattern-card { aspect-ratio: 2; border: 2px solid var(--ui-border); border-radius: 6px; cursor: pointer; overflow: hidden; }
+        .pattern-card:hover, .pattern-card.active { border-color: var(--ui-accent); }
+        
+        /* Editor */
+        .editor-section { margin-bottom: 12px; }
+        .editor-label { font-size: 10px; font-weight: 600; margin-bottom: 4px; color: var(--ui-text); display: block; }
+        .editor-input { width: 100%; padding: 8px 10px; border: 1px solid var(--ui-border); border-radius: 5px; font-family: inherit; font-size: 11px; background: var(--ui-bg); }
+        .editor-input:focus { outline: none; border-color: var(--ui-accent); background: white; }
+        .editor-textarea { min-height: 60px; resize: vertical; }
+        .editor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .exp-card { background: var(--ui-bg); border: 1px solid var(--ui-border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+        .exp-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .exp-card-title { font-weight: 600; font-size: 12px; }
+        .exp-card-remove { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 16px; padding: 0 4px; }
+        .add-btn { width: 100%; padding: 10px; background: var(--ui-bg); border: 2px dashed var(--ui-border); border-radius: 8px; color: var(--ui-text-muted); font-family: inherit; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+        .add-btn:hover { border-color: var(--ui-accent); color: var(--ui-accent); }
+        
+        /* Download */
+        .download-section { padding: 12px 16px; border-top: 1px solid var(--ui-border); }
+        .download-btn { width: 100%; padding: 12px; background: var(--ui-text); border: none; border-radius: 8px; color: white; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .download-btn:hover { background: #333; }
+        
+        /* Preview */
+        .preview { background: linear-gradient(145deg, #e8e0d5, #d5cdc2); padding: 30px; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; }
+        .cv-wrapper { width: 210mm; min-height: 297mm; background: white; box-shadow: 0 20px 80px rgba(0,0,0,0.15); border-radius: 2px; overflow: hidden; }
+        
+        /* Banner Patterns */
+        .cv-banner { height: 50px; width: 100%; background: var(--cv-primary); position: relative; overflow: hidden; }
+        .cv-banner.pattern-none { display: none; }
+        .cv-banner.pattern-dots::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 10px 10px; }
+        .cv-banner.pattern-lines::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.08) 8px, rgba(255,255,255,0.08) 16px); }
+        .cv-banner.pattern-grid::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 16px 16px; }
+        .cv-banner.pattern-gradient { background: linear-gradient(135deg, var(--cv-primary), var(--cv-accent)); }
+        .cv-banner.pattern-accent { background: var(--cv-accent); }
+        
+        /* CV Styles */
+        .cv { width: 100%; min-height: calc(297mm - 50px); padding: 30px 40px; font-family: var(--cv-font-body); font-size: 9.5pt; line-height: 1.5; color: var(--cv-text); background: var(--cv-bg); }
+        .cv-banner.pattern-none + .cv { min-height: 297mm; padding-top: 35px; }
+        .cv-header { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--cv-primary); }
+        .cv-photo { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 3px solid var(--cv-primary); display: none; }
+        .cv-photo.visible { display: block; }
+        .cv-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .cv-header-content { flex: 1; }
+        .cv-name { font-family: var(--cv-font-heading); font-size: 26pt; font-weight: 600; color: var(--cv-primary); line-height: 1.1; margin-bottom: 4px; }
+        .cv-title { font-size: 12pt; font-weight: 500; color: var(--cv-accent); margin-bottom: 3px; }
+        .cv-tagline { font-size: 9pt; color: var(--cv-text-light); font-style: italic; }
+        .cv-contact { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; font-size: 8.5pt; }
+        .cv-contact-item { display: flex; align-items: center; gap: 4px; color: var(--cv-text); }
+        .cv-contact-item a { color: var(--cv-text); text-decoration: none; }
+        .cv-contact-item a:hover { color: var(--cv-accent); text-decoration: underline; }
+        .cv-contact-icon { width: 12px; height: 12px; background: var(--cv-primary); color: white; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 6px; }
+        .cv-main { display: grid; grid-template-columns: 1fr 160px; gap: 25px; }
+        .cv-section { margin-bottom: 18px; }
+        .cv-section-title { font-family: var(--cv-font-heading); font-size: 10pt; font-weight: 600; color: var(--cv-primary); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 2px solid var(--cv-accent); display: inline-block; }
+        .cv-summary { font-size: 9.5pt; line-height: 1.55; text-align: justify; }
+        .cv-exp { margin-bottom: 14px; padding-left: 10px; border-left: 2px solid var(--cv-accent); }
+        .cv-exp-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; margin-bottom: 2px; }
+        .cv-exp-title { font-weight: 600; font-size: 10pt; color: var(--cv-primary); }
+        .cv-exp-date { font-size: 8pt; color: var(--cv-text-light); }
+        .cv-exp-company { font-weight: 500; color: var(--cv-accent); font-size: 9pt; margin-bottom: 4px; }
+        .cv-exp-location { color: var(--cv-text-light); font-size: 8pt; }
+        .cv-exp-desc { font-size: 8.5pt; }
+        .cv-exp-desc ul { margin: 0; padding-left: 12px; }
+        .cv-exp-desc li { margin-bottom: 1px; }
+        .cv-sidebar { padding-left: 15px; border-left: 1px solid var(--cv-border); }
+        .cv-skills { margin-bottom: 10px; }
+        .cv-skills-title { font-size: 8pt; font-weight: 600; color: var(--cv-primary); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .cv-skills-list { display: flex; flex-wrap: wrap; gap: 3px; }
+        .cv-skill { background: var(--cv-bg-subtle); color: var(--cv-text); padding: 2px 6px; border-radius: 3px; font-size: 7.5pt; border: 1px solid var(--cv-border); }
+        .cv-skill.primary { background: var(--cv-primary); color: white; border-color: var(--cv-primary); }
+        .cv-edu { margin-bottom: 8px; }
+        .cv-edu-degree { font-weight: 600; font-size: 8.5pt; color: var(--cv-primary); }
+        .cv-edu-school { font-size: 8pt; color: var(--cv-text); }
+        .cv-edu-date { font-size: 7.5pt; color: var(--cv-text-light); }
+        .cv-lang { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 8pt; }
+        .cv-lang-level { font-size: 7pt; color: var(--cv-text-light); background: var(--cv-bg-subtle); padding: 1px 5px; border-radius: 8px; }
+        .cv-cert { margin-bottom: 5px; padding-left: 8px; position: relative; font-size: 8pt; }
+        .cv-cert::before { content: '✓'; position: absolute; left: 0; color: var(--cv-accent); font-size: 6pt; }
+        .cv-portfolio { background: var(--cv-primary); color: white; padding: 8px; border-radius: 5px; text-align: center; margin-top: 12px; }
+        .cv-portfolio-label { font-size: 6pt; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.7; margin-bottom: 2px; }
+        .cv-portfolio-url { font-weight: 600; font-size: 8.5pt; }
+        .cv-portfolio a { color: white; text-decoration: none; }
+        
+        /* ATS Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: white; border-radius: 12px; width: 100%; max-width: 700px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--ui-border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-size: 18px; font-weight: 700; }
+        .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ui-text-muted); }
+        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--ui-border); display: flex; justify-content: flex-end; gap: 10px; }
+        .ats-input-section { margin-bottom: 20px; }
+        .ats-input-section label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+        .ats-input-section textarea { width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--ui-border); border-radius: 8px; font-family: inherit; font-size: 12px; resize: vertical; }
+        .ats-results { margin-top: 20px; }
+        .ats-score { text-align: center; padding: 20px; background: var(--ui-bg); border-radius: 12px; margin-bottom: 20px; }
+        .ats-score-value { font-size: 48px; font-weight: 700; }
+        .ats-score-label { font-size: 12px; color: var(--ui-text-muted); }
+        .ats-issue { background: #fff5f5; border: 1px solid #fed7d7; border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+        .ats-issue.warning { background: #fffbeb; border-color: #fde68a; }
+        .ats-issue.success { background: #f0fdf4; border-color: #bbf7d0; }
+        .ats-issue-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+        .ats-issue-title { font-weight: 600; font-size: 13px; }
+        .ats-issue-type { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: #e74c3c; color: white; }
+        .ats-issue.warning .ats-issue-type { background: #f59e0b; }
+        .ats-issue.success .ats-issue-type { background: #22c55e; }
+        .ats-issue-desc { font-size: 12px; color: var(--ui-text-muted); margin-bottom: 8px; }
+        .ats-issue-action { font-size: 11px; padding: 6px 12px; background: var(--ui-accent); color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .ats-issue-action:hover { background: var(--ui-accent-hover); }
+        
+        /* Layout variations (simplified) */
+        .layout-1 .cv-main { grid-template-columns: 1fr 160px; }
+        .layout-2 .cv-main { display: block; }
+        .layout-2 .cv-sidebar { display: flex; flex-wrap: wrap; gap: 16px; border: none; padding: 14px 0 0 0; margin-top: 14px; border-top: 1px solid var(--cv-border); }
+        .layout-2 .cv-sidebar > * { flex: 1; min-width: 120px; }
+        .layout-3 .cv-main { grid-template-columns: 170px 1fr; }
+        .layout-3 .cv-sidebar { order: -1; border-left: none; border-right: 1px solid var(--cv-border); padding-left: 0; padding-right: 15px; }
+        .layout-4 .cv-header { text-align: center; flex-direction: column; align-items: center; }
+        .layout-4 .cv-contact { justify-content: center; }
+        .layout-5 .cv-header { background: var(--cv-primary); color: white; margin: -30px -40px 20px; padding: 25px 40px; border: none; }
+        .layout-5 .cv-header .cv-name { color: white; }
+        .layout-5 .cv-header .cv-title { color: var(--cv-accent); }
+        .layout-5 .cv-header .cv-tagline, .layout-5 .cv-header .cv-contact-item, .layout-5 .cv-header .cv-contact-item a { color: rgba(255,255,255,0.85); }
+        .layout-6 .cv-exp { background: var(--cv-bg-subtle); padding: 10px; border-radius: 5px; border-left: none; }
+        .layout-7 { --cv-font-heading: 'Crimson Pro', serif; --cv-font-body: 'Crimson Pro', serif; }
+        .layout-8 { --cv-font-heading: 'Space Grotesk', sans-serif; --cv-font-body: 'Space Grotesk', sans-serif; }
+        .layout-9 .cv-sidebar { background: var(--cv-primary); color: white; margin: -30px -40px -30px 0; padding: 30px 20px 30px 18px; border: none; }
+        .layout-9 .cv-sidebar .cv-section-title, .layout-9 .cv-sidebar .cv-skills-title { color: white; }
+        .layout-9 .cv-sidebar .cv-skill { background: rgba(255,255,255,0.15); border-color: transparent; color: white; }
+        .layout-10 .cv { background: var(--cv-primary); color: white; }
+        .layout-10 .cv-name, .layout-10 .cv-section-title, .layout-10 .cv-exp-title, .layout-10 .cv-skills-title, .layout-10 .cv-edu-degree { color: white; }
+        .layout-10 .cv-title { color: var(--cv-accent); }
+        .layout-10 .cv-header { border-color: var(--cv-accent); }
+        .layout-10 .cv-section-title { border-color: var(--cv-accent); }
+        .layout-10 .cv-skill { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white; }
+        .layout-10 .cv-sidebar { border-color: rgba(255,255,255,0.2); }
+        
+        @media print { body { background: white; } .panel { display: none; } .app { display: block; } .preview { padding: 0; background: white; } .cv-wrapper { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="panel">
+            <div class="panel-header">
+                <div class="logo"><div class="logo-icon">CV</div><div class="logo-text">CV <span>Studio</span></div></div>
+                <div class="header-buttons">
+                    <button class="btn btn-secondary" onclick="openATSModal()">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        ATS Check
+                    </button>
+                    <button class="btn btn-primary" onclick="randomize()">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        Random
+                    </button>
+                </div>
+            </div>
+            <div class="tabs">
+                <div class="tab active" data-tab="content">Content</div>
+                <div class="tab" data-tab="layouts">Layouts</div>
+                <div class="tab" data-tab="themes">Themes</div>
+                <div class="tab" data-tab="fonts">Fonts</div>
+                <div class="tab" data-tab="photo">Photo</div>
+                <div class="tab" data-tab="banner">Banner</div>
+            </div>
+            <div class="tab-content">
+                <!-- Content Pane -->
+                <div class="tab-pane active" id="content-pane">
+                    <div class="section-header"><span class="section-title">Personal Info</span></div>
+                    <div class="editor-section"><label class="editor-label">Full Name</label><input type="text" class="editor-input" id="edit-name" value="Dimitrios Gkorovelis" oninput="updateCV()"></div>
+                    <div class="editor-section"><label class="editor-label">Job Title</label><input type="text" class="editor-input" id="edit-title" value="Senior UX Designer" oninput="updateCV()"></div>
+                    <div class="editor-section"><label class="editor-label">Tagline</label><input type="text" class="editor-input" id="edit-tagline" value="Transforming ideas into delightful digital experiences" oninput="updateCV()"></div>
+                    <div class="editor-row">
+                        <div class="editor-section"><label class="editor-label">Email</label><input type="email" class="editor-input" id="edit-email" value="gorodimitris@gmail.com" oninput="updateCV()"></div>
+                        <div class="editor-section"><label class="editor-label">Phone</label><input type="tel" class="editor-input" id="edit-phone" value="+45 52 73 68 55" oninput="updateCV()"></div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-section"><label class="editor-label">Location</label><input type="text" class="editor-input" id="edit-location" value="Copenhagen, Denmark" oninput="updateCV()"></div>
+                        <div class="editor-section"><label class="editor-label">Portfolio URL</label><input type="url" class="editor-input" id="edit-portfolio" value="https://gorodimitris.gr" oninput="updateCV()"></div>
+                    </div>
+                    <div class="editor-section"><label class="editor-label">LinkedIn URL</label><input type="text" class="editor-input" id="edit-linkedin" value="https://linkedin.com/in/gorodimitris" oninput="updateCV()"></div>
+                    
+                    <div class="section-header"><span class="section-title">Summary</span></div>
+                    <div class="editor-section"><textarea class="editor-input editor-textarea" id="edit-summary" oninput="updateCV()">8+ years of experience transforming the tech and marketing world through creativity and design. Specializing in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems.</textarea></div>
+                    
+                    <div class="section-header"><span class="section-title">Work Experience</span></div>
+                    <div id="experiences-editor"></div>
+                    <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+                    
+                    <div class="section-header"><span class="section-title">Education</span></div>
+                    <div id="education-editor"></div>
+                    <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+                    
+                    <div class="section-header"><span class="section-title">Skills</span></div>
+                    <div class="editor-section"><label class="editor-label">Primary Skills (comma separated)</label><input type="text" class="editor-input" id="edit-skills-primary" value="UX Design, UI Design, Figma" oninput="updateCV()"></div>
+                    <div class="editor-section"><label class="editor-label">All Skills (comma separated)</label><textarea class="editor-input editor-textarea" id="edit-skills" oninput="updateCV()">Design Systems, User Research, Wireframing, Prototyping, Adobe XD, Sketch, ProtoPie, HTML, CSS, Accessibility</textarea></div>
+                    
+                    <div class="section-header"><span class="section-title">Languages</span></div>
+                    <div id="languages-editor"></div>
+                    <button class="add-btn" onclick="addLanguage()">+ Add Language</button>
+                    
+                    <div class="section-header"><span class="section-title">Certifications</span></div>
+                    <div class="editor-section"><label class="editor-label">Certifications (one per line)</label><textarea class="editor-input editor-textarea" id="edit-certs" oninput="updateCV()">Emotional Design
+UX Fundamentals
+User Research Methods</textarea></div>
+                </div>
+                
+                <!-- Layouts Pane -->
+                <div class="tab-pane" id="layouts-pane">
+                    <div class="section-header"><span class="section-title">Choose Layout</span><span class="section-count">10 styles</span></div>
+                    <div class="layouts-grid" id="layoutsGrid"></div>
+                </div>
+                
+                <!-- Themes Pane -->
+                <div class="tab-pane" id="themes-pane">
+                    <div class="section-header"><span class="section-title">Color Themes</span><span class="section-count">30 palettes</span></div>
+                    <div class="themes-grid" id="themesGrid"></div>
+                </div>
+                
+                <!-- Fonts Pane -->
+                <div class="tab-pane" id="fonts-pane">
+                    <div class="section-header"><span class="section-title">Font Combinations</span></div>
+                    <div class="fonts-grid" id="fontsGrid"></div>
+                </div>
+                
+                <!-- Photo Pane -->
+                <div class="tab-pane" id="photo-pane">
+                    <div class="section-header"><span class="section-title">Profile Photo</span></div>
+                    <div class="photo-grid" id="photoGrid"></div>
+                </div>
+                
+                <!-- Banner Pane -->
+                <div class="tab-pane" id="banner-pane">
+                    <div class="section-header"><span class="section-title">Header Banner</span></div>
+                    <div class="patterns-grid" id="patternsGrid"></div>
+                </div>
+            </div>
+            <div class="download-section">
+                <button class="download-btn" onclick="window.print()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download PDF
+                </button>
+            </div>
+        </aside>
+        
+        <main class="preview">
+            <div class="cv-wrapper" id="cvWrapper">
+                <div class="cv-banner pattern-dots" id="cvBanner"></div>
+                <div class="cv" id="cv">
+                    <header class="cv-header">
+                        <div class="cv-photo" id="cvPhoto"><img src="Assets/Dimitrios Gkorovelis (Colour).jpg" alt="Profile" id="cvPhotoImg"></div>
+                        <div class="cv-header-content">
+                            <h1 class="cv-name" id="cv-name">Dimitrios Gkorovelis</h1>
+                            <div class="cv-title" id="cv-title">Senior UX Designer</div>
+                            <div class="cv-tagline" id="cv-tagline">Transforming ideas into delightful digital experiences</div>
+                            <div class="cv-contact" id="cv-contact">
+                                <span class="cv-contact-item"><span class="cv-contact-icon">@</span><a href="mailto:gorodimitris@gmail.com" id="cv-email">gorodimitris@gmail.com</a></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">☎</span><span id="cv-phone">+45 52 73 68 55</span></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">in</span><a href="https://linkedin.com/in/gorodimitris" id="cv-linkedin" target="_blank">linkedin.com/in/gorodimitris</a></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">🌐</span><a href="https://gorodimitris.gr" id="cv-portfolio-link" target="_blank">gorodimitris.gr</a></span>
+                                <span class="cv-contact-item"><span class="cv-contact-icon">📍</span><span id="cv-location">Copenhagen, Denmark</span></span>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="cv-main">
+                        <div class="cv-content">
+                            <section class="cv-section"><h2 class="cv-section-title">Professional Summary</h2><p class="cv-summary" id="cv-summary">8+ years of experience transforming the tech and marketing world through creativity and design. Specializing in designing intuitive webpages, leading user testing sessions, conducting UX audits, and crafting scalable design systems.</p></section>
+                            <section class="cv-section"><h2 class="cv-section-title">Work Experience</h2><div id="cv-experiences"></div></section>
+                        </div>
+                        <aside class="cv-sidebar">
+                            <section class="cv-section"><h2 class="cv-section-title">Skills</h2><div class="cv-skills"><div class="cv-skills-title">Core</div><div class="cv-skills-list" id="cv-skills-primary"></div></div><div class="cv-skills"><div class="cv-skills-title">Tools & Tech</div><div class="cv-skills-list" id="cv-skills-all"></div></div></section>
+                            <section class="cv-section"><h2 class="cv-section-title">Education</h2><div id="cv-education"></div></section>
+                            <section class="cv-section"><h2 class="cv-section-title">Languages</h2><div id="cv-languages"></div></section>
+                            <section class="cv-section"><h2 class="cv-section-title">Certifications</h2><div id="cv-certs"></div></section>
+                            <div class="cv-portfolio"><div class="cv-portfolio-label">Portfolio</div><div class="cv-portfolio-url"><a href="https://gorodimitris.gr" id="cv-portfolio" target="_blank">gorodimitris.gr</a></div></div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- ATS Modal -->
+    <div class="modal-overlay" id="atsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">🔍 ATS Optimization Check</div>
+                <button class="modal-close" onclick="closeATSModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="ats-input-section">
+                    <label>Job Description (optional - paste the job ad for better analysis)</label>
+                    <textarea id="ats-job-desc" placeholder="Paste the job description here to check keyword matching..."></textarea>
+                </div>
+                <div class="ats-input-section">
+                    <label>Company Name (optional)</label>
+                    <input type="text" class="editor-input" id="ats-company" placeholder="e.g., Google, Microsoft, Startup XYZ">
+                </div>
+                <div class="ats-results" id="atsResults" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeATSModal()">Close</button>
+                <button class="btn btn-primary" onclick="runATSCheck()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Analyze CV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const layouts = Array.from({length: 10}, (_, i) => ({ id: i + 1 }));
+        const themes = [
+            { id: 'corporate', name: 'Corporate', primary: '#1a1a2e', accent: '#e94560' },
+            { id: 'navy', name: 'Navy', primary: '#0a1628', accent: '#3b82f6' },
+            { id: 'charcoal', name: 'Charcoal', primary: '#1f2937', accent: '#f59e0b' },
+            { id: 'forest', name: 'Forest', primary: '#14532d', accent: '#22c55e' },
+            { id: 'ocean', name: 'Ocean', primary: '#0c4a6e', accent: '#38bdf8' },
+            { id: 'sunset', name: 'Sunset', primary: '#431407', accent: '#fb923c' },
+            { id: 'lavender', name: 'Lavender', primary: '#4a4063', accent: '#a78bfa' },
+            { id: 'rose', name: 'Rose', primary: '#4a3f48', accent: '#f43f5e' },
+            { id: 'cyberpunk', name: 'Cyberpunk', primary: '#0f0f1a', accent: '#ff00ff' },
+            { id: 'neon', name: 'Neon', primary: '#0a0a0a', accent: '#39ff14' },
+            { id: 'nordic', name: 'Nordic', primary: '#2e3440', accent: '#88c0d0' },
+            { id: 'gold', name: 'Gold', primary: '#1c1917', accent: '#eab308' },
+            { id: 'mint', name: 'Mint', primary: '#1e3a3a', accent: '#5eead4' },
+            { id: 'coral', name: 'Coral', primary: '#3d405b', accent: '#f4845f' },
+            { id: 'slate', name: 'Slate', primary: '#334155', accent: '#6366f1' },
+            { id: 'wine', name: 'Wine', primary: '#4a1d2e', accent: '#be185d' },
+            { id: 'mocha', name: 'Mocha', primary: '#3e3232', accent: '#a67b5b' },
+            { id: 'arctic', name: 'Arctic', primary: '#1e3a5f', accent: '#7dd3fc' },
+            { id: 'cherry', name: 'Cherry', primary: '#2b0f0f', accent: '#dc143c' },
+            { id: 'sage', name: 'Sage', primary: '#3f4f3f', accent: '#86efac' },
+            { id: 'plum', name: 'Plum', primary: '#3d2352', accent: '#c084fc' },
+            { id: 'ember', name: 'Ember', primary: '#292524', accent: '#ef4444' },
+            { id: 'electric', name: 'Electric', primary: '#0d0d1a', accent: '#00ffff' },
+            { id: 'bronze', name: 'Bronze', primary: '#292524', accent: '#cd7f32' },
+            { id: 'dracula', name: 'Dracula', primary: '#282a36', accent: '#ff79c6' },
+            { id: 'github', name: 'GitHub', primary: '#0d1117', accent: '#58a6ff' },
+            { id: 'stone', name: 'Stone', primary: '#292524', accent: '#a8a29e' },
+            { id: 'moss', name: 'Moss', primary: '#1a2e1a', accent: '#4ade80' },
+            { id: 'sand', name: 'Sand', primary: '#44403c', accent: '#d6d3d1' },
+            { id: 'silver', name: 'Silver', primary: '#27272a', accent: '#94a3b8' }
+        ];
+        const fonts = [
+            { id: 'classic', name: 'Classic', heading: "'Playfair Display', serif", body: "'Inter', sans-serif" },
+            { id: 'modern', name: 'Modern', heading: "'Inter', sans-serif", body: "'Inter', sans-serif" },
+            { id: 'editorial', name: 'Editorial', heading: "'Crimson Pro', serif", body: "'Crimson Pro', serif" },
+            { id: 'geometric', name: 'Geometric', heading: "'Space Grotesk', sans-serif", body: "'Space Grotesk', sans-serif" },
+            { id: 'tech', name: 'Tech', heading: "'JetBrains Mono', monospace", body: "'JetBrains Mono', monospace" },
+            { id: 'startup', name: 'Startup', heading: "'Poppins', sans-serif", body: "'Poppins', sans-serif" },
+            { id: 'elegant', name: 'Elegant', heading: "'Lora', serif", body: "'Lora', serif" },
+            { id: 'corporate', name: 'Corporate', heading: "'Montserrat', sans-serif", body: "'Inter', sans-serif" },
+            { id: 'smooth', name: 'Smooth', heading: "'DM Sans', sans-serif", body: "'DM Sans', sans-serif" },
+            { id: 'contemporary', name: 'Contemporary', heading: "'Manrope', sans-serif", body: "'Manrope', sans-serif" }
+        ];
+        const photos = [
+            { id: 'none', name: 'No Photo', src: null },
+            { id: 'color', name: 'Color', src: 'Assets/Dimitrios Gkorovelis (Colour).jpg' },
+            { id: 'bw', name: 'B&W', src: 'Assets/Dimitrios Gkorovelis (BW).jpg' }
+        ];
+        const patterns = [
+            { id: 'none', name: 'None' },
+            { id: 'dots', name: 'Dots' },
+            { id: 'lines', name: 'Lines' },
+            { id: 'grid', name: 'Grid' },
+            { id: 'gradient', name: 'Gradient' },
+            { id: 'accent', name: 'Accent' }
+        ];
+        
+        // State
+        let state = {
+            layout: 1, theme: 'corporate', font: 'classic', photo: 'color', pattern: 'dots',
+            experiences: [
+                { title: 'Senior UX Designer', company: 'GUT Copenhagen (Globant)', location: 'Copenhagen', dates: 'Feb 2024 — Present', bullets: ['Lead UX design at the intersection of creativity and AI', 'Conduct UX audits and user testing sessions', 'Design scalable design systems'] },
+                { title: 'Freelance Product Designer', company: 'Self-Employed', location: 'Remote', dates: 'Oct 2016 — Present', bullets: ['End-to-end product design with accessibility focus', 'Wireframes, prototypes, animated interactions'] },
+                { title: 'Product Designer', company: 'Atos', location: 'Copenhagen', dates: 'Jan 2023 — Feb 2024', bullets: ['B2B traceability software design', 'Enterprise workflow interfaces'] },
+                { title: 'Visual & Interaction Designer', company: 'WhiteSpace', location: 'Athens', dates: 'Jul 2021 — Jan 2023', bullets: ['User flows and interactive prototypes'] }
+            ],
+            education: [{ degree: 'Graphic Design', school: 'TEI of Athens', dates: '2009 — 2017' }],
+            languages: [{ name: 'Greek', level: 'Native' }, { name: 'English', level: 'Fluent' }]
+        };
+        
+        // Render functions
+        function renderLayouts() {
+            document.getElementById('layoutsGrid').innerHTML = layouts.map(l => `<div class="layout-card ${state.layout === l.id ? 'active' : ''}" onclick="selectLayout(${l.id})"></div>`).join('');
+        }
+        function renderThemes() {
+            document.getElementById('themesGrid').innerHTML = themes.map(t => `<div class="theme-card ${state.theme === t.id ? 'active' : ''}" onclick="selectTheme('${t.id}')" style="background: linear-gradient(135deg, ${t.primary} 50%, ${t.accent} 50%);"></div>`).join('');
+        }
+        function renderFonts() {
+            document.getElementById('fontsGrid').innerHTML = fonts.map(f => `<div class="font-card ${state.font === f.id ? 'active' : ''}" onclick="selectFont('${f.id}')"><div class="font-preview-heading" style="font-family: ${f.heading}">Dimitrios Gkorovelis</div><div class="font-preview-body" style="font-family: ${f.body}">Senior UX Designer with 8+ years</div><div class="font-name">${f.name}</div></div>`).join('');
+        }
+        function renderPhotos() {
+            document.getElementById('photoGrid').innerHTML = photos.map(p => p.id === 'none' ? `<div class="photo-card no-photo ${state.photo === p.id ? 'active' : ''}" onclick="selectPhoto('${p.id}')">No Photo</div>` : `<div class="photo-card ${state.photo === p.id ? 'active' : ''}" onclick="selectPhoto('${p.id}')"><img src="${p.src}" alt="${p.name}"></div>`).join('');
+        }
+        function renderPatterns() {
+            document.getElementById('patternsGrid').innerHTML = patterns.map(p => `<div class="pattern-card ${state.pattern === p.id ? 'active' : ''}" onclick="selectPattern('${p.id}')"><div class="cv-banner pattern-${p.id}" style="height:100%;"></div></div>`).join('');
+        }
+        function renderExperiencesEditor() {
+            document.getElementById('experiences-editor').innerHTML = state.experiences.map((exp, i) => `
+                <div class="exp-card">
+                    <div class="exp-card-header"><span class="exp-card-title">Experience ${i+1}</span><button class="exp-card-remove" onclick="removeExperience(${i})">×</button></div>
+                    <div class="editor-row"><div class="editor-section"><label class="editor-label">Title</label><input type="text" class="editor-input" value="${exp.title}" onchange="updateExp(${i}, 'title', this.value)"></div><div class="editor-section"><label class="editor-label">Company</label><input type="text" class="editor-input" value="${exp.company}" onchange="updateExp(${i}, 'company', this.value)"></div></div>
+                    <div class="editor-row"><div class="editor-section"><label class="editor-label">Location</label><input type="text" class="editor-input" value="${exp.location}" onchange="updateExp(${i}, 'location', this.value)"></div><div class="editor-section"><label class="editor-label">Dates</label><input type="text" class="editor-input" value="${exp.dates}" onchange="updateExp(${i}, 'dates', this.value)"></div></div>
+                    <div class="editor-section"><label class="editor-label">Bullet Points (one per line)</label><textarea class="editor-input editor-textarea" onchange="updateExp(${i}, 'bullets', this.value.split('\\n').filter(b=>b.trim()))">${exp.bullets.join('\n')}</textarea></div>
+                </div>
+            `).join('');
+        }
+        function renderEducationEditor() {
+            document.getElementById('education-editor').innerHTML = state.education.map((edu, i) => `
+                <div class="exp-card">
+                    <div class="exp-card-header"><span class="exp-card-title">Education ${i+1}</span><button class="exp-card-remove" onclick="removeEducation(${i})">×</button></div>
+                    <div class="editor-section"><label class="editor-label">Degree/Field</label><input type="text" class="editor-input" value="${edu.degree}" onchange="updateEdu(${i}, 'degree', this.value)"></div>
+                    <div class="editor-row"><div class="editor-section"><label class="editor-label">School</label><input type="text" class="editor-input" value="${edu.school}" onchange="updateEdu(${i}, 'school', this.value)"></div><div class="editor-section"><label class="editor-label">Dates</label><input type="text" class="editor-input" value="${edu.dates}" onchange="updateEdu(${i}, 'dates', this.value)"></div></div>
+                </div>
+            `).join('');
+        }
+        function renderLanguagesEditor() {
+            document.getElementById('languages-editor').innerHTML = state.languages.map((lang, i) => `
+                <div class="exp-card">
+                    <div class="exp-card-header"><span class="exp-card-title">Language ${i+1}</span><button class="exp-card-remove" onclick="removeLanguage(${i})">×</button></div>
+                    <div class="editor-row"><div class="editor-section"><label class="editor-label">Language</label><input type="text" class="editor-input" value="${lang.name}" onchange="updateLang(${i}, 'name', this.value)"></div><div class="editor-section"><label class="editor-label">Level</label><input type="text" class="editor-input" value="${lang.level}" onchange="updateLang(${i}, 'level', this.value)"></div></div>
+                </div>
+            `).join('');
+        }
+        
+        // Selection functions
+        function selectLayout(id) { state.layout = id; renderLayouts(); document.getElementById('cvWrapper').className = 'cv-wrapper layout-' + id; }
+        function selectTheme(id) { state.theme = id; const t = themes.find(x => x.id === id); renderThemes(); document.documentElement.style.setProperty('--cv-primary', t.primary); document.documentElement.style.setProperty('--cv-accent', t.accent); }
+        function selectFont(id) { state.font = id; const f = fonts.find(x => x.id === id); renderFonts(); document.documentElement.style.setProperty('--cv-font-heading', f.heading); document.documentElement.style.setProperty('--cv-font-body', f.body); }
+        function selectPhoto(id) { state.photo = id; const p = photos.find(x => x.id === id); renderPhotos(); const el = document.getElementById('cvPhoto'); if (id === 'none') { el.classList.remove('visible'); } else { el.classList.add('visible'); document.getElementById('cvPhotoImg').src = p.src; } }
+        function selectPattern(id) { state.pattern = id; renderPatterns(); document.getElementById('cvBanner').className = 'cv-banner pattern-' + id; }
+        
+        // CRUD functions
+        function addExperience() { state.experiences.push({ title: '', company: '', location: '', dates: '', bullets: [''] }); renderExperiencesEditor(); updateCV(); }
+        function removeExperience(i) { state.experiences.splice(i, 1); renderExperiencesEditor(); updateCV(); }
+        function updateExp(i, key, val) { state.experiences[i][key] = val; updateCV(); }
+        function addEducation() { state.education.push({ degree: '', school: '', dates: '' }); renderEducationEditor(); updateCV(); }
+        function removeEducation(i) { state.education.splice(i, 1); renderEducationEditor(); updateCV(); }
+        function updateEdu(i, key, val) { state.education[i][key] = val; updateCV(); }
+        function addLanguage() { state.languages.push({ name: '', level: '' }); renderLanguagesEditor(); updateCV(); }
+        function removeLanguage(i) { state.languages.splice(i, 1); renderLanguagesEditor(); updateCV(); }
+        function updateLang(i, key, val) { state.languages[i][key] = val; updateCV(); }
+        
+        function randomize() {
+            selectLayout(layouts[Math.floor(Math.random() * layouts.length)].id);
+            selectTheme(themes[Math.floor(Math.random() * themes.length)].id);
+            selectFont(fonts[Math.floor(Math.random() * fonts.length)].id);
+            selectPhoto(photos[Math.floor(Math.random() * photos.length)].id);
+            selectPattern(patterns[Math.floor(Math.random() * patterns.length)].id);
+        }
+        
+        function updateCV() {
+            document.getElementById('cv-name').textContent = document.getElementById('edit-name').value;
+            document.getElementById('cv-title').textContent = document.getElementById('edit-title').value;
+            document.getElementById('cv-tagline').textContent = document.getElementById('edit-tagline').value;
+            document.getElementById('cv-summary').textContent = document.getElementById('edit-summary').value;
+            
+            const email = document.getElementById('edit-email').value;
+            const emailEl = document.getElementById('cv-email');
+            emailEl.textContent = email;
+            emailEl.href = 'mailto:' + email;
+            
+            document.getElementById('cv-phone').textContent = document.getElementById('edit-phone').value;
+            document.getElementById('cv-location').textContent = document.getElementById('edit-location').value;
+            
+            const portfolio = document.getElementById('edit-portfolio').value;
+            const portfolioDisplay = portfolio.replace(/^https?:\/\//, '');
+            document.getElementById('cv-portfolio-link').textContent = portfolioDisplay;
+            document.getElementById('cv-portfolio-link').href = portfolio;
+            document.getElementById('cv-portfolio').textContent = portfolioDisplay;
+            document.getElementById('cv-portfolio').href = portfolio;
+            
+            const linkedin = document.getElementById('edit-linkedin').value;
+            const linkedinDisplay = linkedin.replace(/^https?:\/\//, '');
+            document.getElementById('cv-linkedin').textContent = linkedinDisplay;
+            document.getElementById('cv-linkedin').href = linkedin;
+            
+            // Experiences
+            document.getElementById('cv-experiences').innerHTML = state.experiences.map(exp => `
+                <div class="cv-exp">
+                    <div class="cv-exp-header"><span class="cv-exp-title">${exp.title}</span><span class="cv-exp-date">${exp.dates}</span></div>
+                    <div class="cv-exp-company">${exp.company} <span class="cv-exp-location">· ${exp.location}</span></div>
+                    <div class="cv-exp-desc"><ul>${exp.bullets.map(b => `<li>${b}</li>`).join('')}</ul></div>
+                </div>
+            `).join('');
+            
+            // Education
+            document.getElementById('cv-education').innerHTML = state.education.map(edu => `
+                <div class="cv-edu"><div class="cv-edu-degree">${edu.degree}</div><div class="cv-edu-school">${edu.school}</div><div class="cv-edu-date">${edu.dates}</div></div>
+            `).join('');
+            
+            // Languages
+            document.getElementById('cv-languages').innerHTML = state.languages.map(lang => `
+                <div class="cv-lang"><span>${lang.name}</span><span class="cv-lang-level">${lang.level}</span></div>
+            `).join('');
+            
+            // Skills
+            const primarySkills = document.getElementById('edit-skills-primary').value.split(',').map(s => s.trim()).filter(s => s);
+            const allSkills = document.getElementById('edit-skills').value.split(',').map(s => s.trim()).filter(s => s);
+            document.getElementById('cv-skills-primary').innerHTML = primarySkills.map(s => `<span class="cv-skill primary">${s}</span>`).join('');
+            document.getElementById('cv-skills-all').innerHTML = allSkills.map(s => `<span class="cv-skill">${s}</span>`).join('');
+            
+            // Certs
+            const certs = document.getElementById('edit-certs').value.split('\n').map(c => c.trim()).filter(c => c);
+            document.getElementById('cv-certs').innerHTML = certs.map(c => `<div class="cv-cert">${c}</div>`).join('');
+        }
+        
+        // ATS Check
+        function openATSModal() { document.getElementById('atsModal').classList.add('active'); }
+        function closeATSModal() { document.getElementById('atsModal').classList.remove('active'); }
+        
+        function runATSCheck() {
+            const jobDesc = document.getElementById('ats-job-desc').value.toLowerCase();
+            const company = document.getElementById('ats-company').value;
+            const issues = [];
+            let score = 100;
+            
+            const name = document.getElementById('edit-name').value;
+            const title = document.getElementById('edit-title').value;
+            const summary = document.getElementById('edit-summary').value;
+            const skills = document.getElementById('edit-skills-primary').value + ',' + document.getElementById('edit-skills').value;
+            const email = document.getElementById('edit-email').value;
+            const phone = document.getElementById('edit-phone').value;
+            const linkedin = document.getElementById('edit-linkedin').value;
+            
+            // Basic checks
+            if (!name.trim()) { issues.push({ type: 'error', title: 'Missing Name', desc: 'Your CV must include your full name.', action: 'Go to Content tab and add your name', tab: 'content' }); score -= 20; }
+            if (!email.trim()) { issues.push({ type: 'error', title: 'Missing Email', desc: 'Contact email is required for recruiters to reach you.', action: 'Add your email address', tab: 'content' }); score -= 15; }
+            if (!phone.trim()) { issues.push({ type: 'warning', title: 'Missing Phone', desc: 'Adding a phone number increases callback rates.', action: 'Add your phone number', tab: 'content' }); score -= 5; }
+            if (!linkedin.includes('linkedin')) { issues.push({ type: 'warning', title: 'Missing LinkedIn', desc: 'Most recruiters check LinkedIn profiles.', action: 'Add your LinkedIn URL', tab: 'content' }); score -= 5; }
+            if (summary.length < 100) { issues.push({ type: 'warning', title: 'Short Summary', desc: 'Your summary should be 2-3 sentences highlighting key achievements.', action: 'Expand your professional summary', tab: 'content' }); score -= 10; }
+            if (state.experiences.length < 2) { issues.push({ type: 'warning', title: 'Limited Experience', desc: 'Add more work experience entries to show career progression.', action: 'Add more experience entries', tab: 'content' }); score -= 10; }
+            if (skills.split(',').length < 5) { issues.push({ type: 'warning', title: 'Few Skills', desc: 'Add more relevant skills to pass ATS keyword filters.', action: 'Add more skills', tab: 'content' }); score -= 10; }
+            
+            // Check for action verbs
+            const actionVerbs = ['led', 'managed', 'developed', 'created', 'designed', 'implemented', 'improved', 'increased', 'reduced', 'achieved'];
+            const expText = state.experiences.map(e => e.bullets.join(' ')).join(' ').toLowerCase();
+            const hasActionVerbs = actionVerbs.some(v => expText.includes(v));
+            if (!hasActionVerbs) { issues.push({ type: 'warning', title: 'Missing Action Verbs', desc: 'Use action verbs like "Led", "Developed", "Achieved" to start bullet points.', action: 'Edit experience bullet points', tab: 'content' }); score -= 10; }
+            
+            // Check for metrics/numbers
+            const hasNumbers = /\d+%|\d+ (users|clients|projects|team|million|thousand)/i.test(expText);
+            if (!hasNumbers) { issues.push({ type: 'warning', title: 'No Quantified Achievements', desc: 'Add metrics like "Increased sales by 25%" or "Managed team of 5".', action: 'Add numbers to your achievements', tab: 'content' }); score -= 10; }
+            
+            // Job description matching
+            if (jobDesc.length > 50) {
+                const cvText = (name + ' ' + title + ' ' + summary + ' ' + skills + ' ' + expText).toLowerCase();
+                const jobWords = jobDesc.match(/\b[a-z]{4,}\b/g) || [];
+                const importantWords = [...new Set(jobWords)].filter(w => !['and', 'the', 'with', 'for', 'that', 'this', 'from', 'have', 'will', 'your', 'about'].includes(w));
+                const matchedWords = importantWords.filter(w => cvText.includes(w));
+                const matchRate = matchedWords.length / importantWords.length;
+                
+                if (matchRate < 0.3) {
+                    issues.push({ type: 'error', title: 'Low Keyword Match', desc: `Only ${Math.round(matchRate * 100)}% of job description keywords found in your CV. ATS may filter you out.`, action: 'Add more relevant keywords from the job description', tab: 'content' });
+                    score -= 20;
+                } else if (matchRate < 0.5) {
+                    issues.push({ type: 'warning', title: 'Moderate Keyword Match', desc: `${Math.round(matchRate * 100)}% keyword match. Consider adding more terms from the job description.`, action: 'Review and add missing keywords', tab: 'content' });
+                    score -= 10;
+                } else {
+                    issues.push({ type: 'success', title: 'Good Keyword Match', desc: `${Math.round(matchRate * 100)}% of job keywords found. Your CV is well-targeted.`, action: null });
+                }
+                
+                // Find missing important keywords
+                const missingKeywords = importantWords.filter(w => !cvText.includes(w)).slice(0, 10);
+                if (missingKeywords.length > 0) {
+                    issues.push({ type: 'warning', title: 'Missing Keywords', desc: `Consider adding: ${missingKeywords.join(', ')}`, action: 'Add these keywords naturally to your CV', tab: 'content' });
+                }
+            }
+            
+            // Success checks
+            if (state.experiences.some(e => e.bullets.length >= 3)) { issues.push({ type: 'success', title: 'Detailed Experience', desc: 'Your experience entries have good detail.', action: null }); }
+            if (email && phone && linkedin) { issues.push({ type: 'success', title: 'Complete Contact Info', desc: 'All contact information is present.', action: null }); }
+            
+            score = Math.max(0, Math.min(100, score));
+            
+            // Render results
+            const resultsHtml = `
+                <div class="ats-score">
+                    <div class="ats-score-value" style="color: ${score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#e74c3c'}">${score}</div>
+                    <div class="ats-score-label">ATS Optimization Score</div>
+                </div>
+                ${issues.map(issue => `
+                    <div class="ats-issue ${issue.type === 'warning' ? 'warning' : issue.type === 'success' ? 'success' : ''}">
+                        <div class="ats-issue-header">
+                            <div class="ats-issue-title">${issue.title}</div>
+                            <span class="ats-issue-type">${issue.type === 'error' ? 'Error' : issue.type === 'warning' ? 'Warning' : 'Good'}</span>
+                        </div>
+                        <div class="ats-issue-desc">${issue.desc}</div>
+                        ${issue.action ? `<button class="ats-issue-action" onclick="closeATSModal(); switchToTab('${issue.tab}')">${issue.action}</button>` : ''}
+                    </div>
+                `).join('')}
+            `;
+            
+            document.getElementById('atsResults').innerHTML = resultsHtml;
+            document.getElementById('atsResults').style.display = 'block';
+        }
+        
+        function switchToTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(tabId + '-pane').classList.add('active');
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => switchToTab(tab.dataset.tab));
+        });
+        
+        // Initialize
+        renderLayouts(); renderThemes(); renderFonts(); renderPhotos(); renderPatterns();
+        renderExperiencesEditor(); renderEducationEditor(); renderLanguagesEditor();
+        selectPhoto('color');
+        updateCV();
+    </script>
+</body>
+</html>
+
